@@ -5,6 +5,7 @@ import {TypeOrmModule} from "@nestjs/typeorm";
 import {CqrsModule} from "@nestjs/cqrs";
 import {CartEntity} from "./common/entities/cart.entity";
 import {ClientsModule, Transport} from "@nestjs/microservices";
+import {FindOneByIdHandler} from "./cqrs/handlers/findOneById.handler";
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -30,7 +31,7 @@ import {ClientsModule, Transport} from "@nestjs/microservices";
     ])
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, FindOneByIdHandler],
 })
 export class AppModule {
 }
