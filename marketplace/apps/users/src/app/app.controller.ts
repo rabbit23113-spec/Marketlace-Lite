@@ -10,6 +10,21 @@ export class AppController {
   constructor(private readonly appService: AppService) {
   }
 
+  @MessagePattern("users.findMany")
+  async findMany(): Promise<UserEntity[]> {
+    return await this.appService.findMany();
+  }
+
+  @MessagePattern("users.findOneById")
+  async findOneById(@Payload() payload: { userId: string }): Promise<UserEntity> {
+    return await this.appService.findOneById(payload.userId);
+  }
+
+  @MessagePattern("users.findOneByEmail")
+  async findOneByEmail(@Payload() payload: { email: string }): Promise<UserEntity> {
+    return await this.appService.findOneByEmail(payload.email);
+  }
+
   @MessagePattern("users.create")
   async createUser(@Payload() payload: { dto: CreateUserDto }): Promise<UserEntity> {
     return await this.appService.createUser(payload.dto);
@@ -23,15 +38,5 @@ export class AppController {
   @EventPattern("users.deleteOne")
   async deleteUser(@Payload() payload: { userId: string }): Promise<void> {
     await this.appService.deleteUser(payload.userId);
-  }
-
-  @MessagePattern("users.findOneById")
-  async findOneById(@Payload() payload: { userId: string }): Promise<UserEntity> {
-    return await this.appService.findOneById(payload.userId);
-  }
-
-  @MessagePattern("users.findOneByEmail")
-  async findOneByEmail(@Payload() payload: { email: string }): Promise<UserEntity> {
-    return await this.appService.findOneByEmail(payload.email);
   }
 }

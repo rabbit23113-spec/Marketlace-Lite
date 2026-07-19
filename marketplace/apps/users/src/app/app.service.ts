@@ -8,10 +8,23 @@ import {UpdateUserCommand} from "./cqrs/commands/updateUser.command";
 import {DeleteUserCommand} from "./cqrs/commands/deleteUser.command";
 import {FindOneByIdQuery} from "./cqrs/queries/findOneById.query";
 import {FindOneByEmailQuery} from "./cqrs/queries/findOneByEmail.query";
+import {FindManyQuery} from "./cqrs/queries/findMany.query";
 
 @Injectable()
 export class AppService {
   constructor(private commandBus: CommandBus, private queryBus: QueryBus) {
+  }
+
+  async findOneById(userId: string): Promise<UserEntity> {
+    return await this.queryBus.execute(new FindOneByIdQuery(userId));
+  }
+
+  async findOneByEmail(email: string): Promise<UserEntity> {
+    return await this.queryBus.execute(new FindOneByEmailQuery(email));
+  }
+
+  async findMany(): Promise<UserEntity[]> {
+    return await this.queryBus.execute(new FindManyQuery());
   }
 
   async createUser(dto: CreateUserDto): Promise<UserEntity> {
@@ -24,13 +37,5 @@ export class AppService {
 
   async deleteUser(userId: string): Promise<void> {
     return await this.commandBus.execute(new DeleteUserCommand(userId));
-  }
-
-  async findOneById(userId: string): Promise<UserEntity> {
-    return await this.queryBus.execute(new FindOneByIdQuery(userId));
-  }
-
-  async findOneByEmail(email: string): Promise<UserEntity> {
-    return await this.queryBus.execute(new FindOneByEmailQuery(email));
   }
 }

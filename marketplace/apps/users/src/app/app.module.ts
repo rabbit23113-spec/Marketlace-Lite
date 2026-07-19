@@ -9,6 +9,7 @@ import {UpdateUserHandler} from "./cqrs/handlers/updateUser.handler";
 import {DeleteUserHandler} from "./cqrs/handlers/deleteUser.handler";
 import {FindOneByIdHandler} from "./cqrs/handlers/findOneById.handler";
 import {FindOneByEmailHandler} from "./cqrs/handlers/findOneByEmail.handler";
+import {FindManyHandler} from "./cqrs/handlers/findMany.handler";
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -24,7 +25,7 @@ import {FindOneByEmailHandler} from "./cqrs/handlers/findOneByEmail.handler";
     CqrsModule.forRoot(),
   ],
   controllers: [AppController],
-  providers: [AppService, CreateUserHandler, UpdateUserHandler, DeleteUserHandler, FindOneByIdHandler, FindOneByEmailHandler],
+  providers: [AppService, CreateUserHandler, UpdateUserHandler, DeleteUserHandler, FindOneByIdHandler, FindOneByEmailHandler, FindManyHandler],
 })
 export class AppModule {
 }
