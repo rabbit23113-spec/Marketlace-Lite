@@ -1,4 +1,9 @@
 services:
+  users_service:
+    build:
+      context: "."
+      dockerfile: ./apps/users/Dockerfile
+    ports: [ "12091:12091" ]
   users_database:
     image: postgres
     ports: [ "5432:5432" ]
