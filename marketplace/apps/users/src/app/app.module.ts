@@ -1,7 +1,8 @@
-import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import {Module} from '@nestjs/common';
+import {AppController} from './app.controller';
+import {AppService} from './app.service';
 import {TypeOrmModule} from "@nestjs/typeorm";
+import {UserEntity} from "./common/entities/user.entity";
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -11,9 +12,12 @@ import {TypeOrmModule} from "@nestjs/typeorm";
     database: 'users',
     synchronize: true,
     autoLoadEntities: true,
-    entities: [],
-  })],
+    entities: [UserEntity],
+  }),
+    TypeOrmModule.forFeature([UserEntity]),
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule {
+}
