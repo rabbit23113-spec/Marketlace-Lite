@@ -4,6 +4,7 @@ import {CartEntity} from "./common/entities/cart.entity";
 import {FindOneByIdQuery} from "./cqrs/queries/findOneById.query";
 import {FindOneByUserIdQuery} from "./cqrs/queries/findOneByUserId.query";
 import {CreateCartCommand} from "./cqrs/commands/createCart.command";
+import {AddProductCommand} from "./cqrs/commands/addProduct.command";
 
 @Injectable()
 export class AppService {
@@ -20,5 +21,9 @@ export class AppService {
 
   async createCart(userId: string): Promise<CartEntity> {
     return await this.commandBus.execute(new CreateCartCommand(userId));
+  }
+
+  async addProduct(cartId: string, productId: string): Promise<void> {
+    await this.commandBus.execute(new AddProductCommand(cartId, productId));
   }
 }

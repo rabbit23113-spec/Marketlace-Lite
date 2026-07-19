@@ -8,6 +8,7 @@ import {ClientsModule, Transport} from "@nestjs/microservices";
 import {FindOneByIdHandler} from "./cqrs/handlers/findOneById.handler";
 import {FindOneByUserIdHandler} from "./cqrs/handlers/findOneByUserId.handler";
 import {CreateCartHandler} from "./cqrs/handlers/createCart.handler";
+import {AddProductHandler} from "./cqrs/handlers/addProduct.handler";
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -29,11 +30,19 @@ import {CreateCartHandler} from "./cqrs/handlers/createCart.handler";
           queue: "USERS_QUEUE",
           urls: ["amqp://rabbitmq:5672"]
         }
+      },
+      {
+        name: "PRODUCTS_CLIENT",
+        transport: Transport.RMQ,
+        options: {
+          queue: "PRODUCTS_QUEUE",
+          urls: ["amqp://rabbitmq:5672"]
+        }
       }
     ])
   ],
   controllers: [AppController],
-  providers: [AppService, FindOneByIdHandler, FindOneByUserIdHandler, CreateCartHandler],
+  providers: [AppService, FindOneByIdHandler, FindOneByUserIdHandler, CreateCartHandler, AddProductHandler],
 })
 export class AppModule {
 }
