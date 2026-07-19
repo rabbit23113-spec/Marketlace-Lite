@@ -11,6 +11,8 @@ import {CreateCartHandler} from "./cqrs/handlers/createCart.handler";
 import {AddProductHandler} from "./cqrs/handlers/addProduct.handler";
 import {RemoveProductHandler} from "./cqrs/handlers/removeProduct.handler";
 import {ResetCartHandler} from "./cqrs/handlers/resetCart.handler";
+import {LoggerModule} from "nestjs-pino";
+import {DeleteCartHandler} from "./cqrs/handlers/deleteCart.handler";
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -41,10 +43,15 @@ import {ResetCartHandler} from "./cqrs/handlers/resetCart.handler";
           urls: ["amqp://rabbitmq:5672"]
         }
       }
-    ])
+    ]),
+    LoggerModule.forRoot({
+      pinoHttp: {
+        level: process.env.NODE_ENV === "production" ? "info" : "debug",
+      }
+    })
   ],
   controllers: [AppController],
-  providers: [AppService, FindOneByIdHandler, FindOneByUserIdHandler, CreateCartHandler, AddProductHandler, RemoveProductHandler, ResetCartHandler],
+  providers: [AppService, FindOneByIdHandler, FindOneByUserIdHandler, CreateCartHandler, AddProductHandler, RemoveProductHandler, ResetCartHandler, DeleteCartHandler],
 })
 export class AppModule {
 }

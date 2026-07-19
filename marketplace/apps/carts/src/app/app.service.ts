@@ -7,6 +7,7 @@ import {CreateCartCommand} from "./cqrs/commands/createCart.command";
 import {AddProductCommand} from "./cqrs/commands/addProduct.command";
 import {RemoveProductCommand} from "./cqrs/commands/removeProduct.command";
 import {ResetCartCommand} from "./cqrs/commands/resetCart.command";
+import {DeleteCartCommand} from "./cqrs/commands/deleteCart.command";
 
 @Injectable()
 export class AppService {
@@ -35,5 +36,9 @@ export class AppService {
 
   async resetCart(cartId: string): Promise<CartEntity> {
     return await this.commandBus.execute(new ResetCartCommand(cartId));
+  }
+
+  async deleteCart(userId: string): Promise<void> {
+    await this.commandBus.execute(new DeleteCartCommand(userId));
   }
 }

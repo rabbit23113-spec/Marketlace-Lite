@@ -11,7 +11,8 @@ import {firstValueFrom} from "rxjs";
 export class AddProductHandler implements ICommandHandler<AddProductCommand> {
   constructor(
     @InjectRepository(CartEntity) private repository: Repository<CartEntity>,
-    @Inject("PRODUCTS_CLIENT") private productsClient: ClientProxy) {
+    @Inject("PRODUCTS_CLIENT") private productsClient: ClientProxy,
+  ) {
   }
 
   async execute(command: AddProductCommand): Promise<CartEntity> {
