@@ -1,10 +1,41 @@
-import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import {Module} from '@nestjs/common';
+import {AppController} from './app.controller';
+import {AppService} from './app.service';
+import {ClientsModule, Transport} from "@nestjs/microservices";
+import {TypeOrmModule} from "@nestjs/typeorm";
+import {LoggerModule} from "nestjs-pino";
+import {CqrsModule} from "@nestjs/cqrs";
 
 @Module({
-  imports: [],
+  imports: [TypeOrmModule.forRoot({
+    type: 'postgres',
+    username: 'root',
+    password: 'root',
+    database: 'auth',
+    synchronize: true,
+    autoLoadEntities: true,
+    entities: [],
+  }),
+    TypeOrmModule.forFeature([]),
+    CqrsModule.forRoot(),
+    ClientsModule.register([
+      {
+        name: "USERS_CLIENT",
+        transport: Transport.RMQ,
+        options: {
+          queue: "USERS_QUEUE",
+          urls: ["amqp://rabbitmq:5672"]
+        }
+      },
+    ]),
+    LoggerModule.forRoot({
+      pinoHttp: {
+        level: process.env.NODE_ENV === "production" ? "info" : "debug",
+      }
+    })
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule {
+}
