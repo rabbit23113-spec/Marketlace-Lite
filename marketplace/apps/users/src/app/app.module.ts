@@ -4,6 +4,7 @@ import {AppService} from './app.service';
 import {TypeOrmModule} from "@nestjs/typeorm";
 import {UserEntity} from "./common/entities/user.entity";
 import {CqrsModule} from "@nestjs/cqrs";
+import {CreateUserHandler} from "./cqrs/handlers/createUser.handler";
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -19,7 +20,7 @@ import {CqrsModule} from "@nestjs/cqrs";
     CqrsModule.forRoot(),
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, CreateUserHandler],
 })
 export class AppModule {
 }
