@@ -14,7 +14,7 @@ export class AddProductHandler implements ICommandHandler<AddProductCommand> {
     @Inject("PRODUCTS_CLIENT") private productsClient: ClientProxy) {
   }
 
-  async execute(command: AddProductCommand): Promise<void> {
+  async execute(command: AddProductCommand): Promise<CartEntity> {
     const {cartId, productId} = command;
     const cart: CartEntity | null = await this.repository.findOneBy({cartId});
     if (!cart) throw new NotFoundException("Cart not found");
@@ -22,5 +22,6 @@ export class AddProductHandler implements ICommandHandler<AddProductCommand> {
     if (!product) throw new NotFoundException("Product not found");
     const newProductIds: string[] = [...cart.productIds, productId];
     await this.repository.update(cartId, {productIds: newProductIds});
+    return cart;
   }
 }

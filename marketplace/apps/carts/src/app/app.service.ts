@@ -24,8 +24,8 @@ export class AppService {
     return await this.commandBus.execute(new CreateCartCommand(userId));
   }
 
-  async addProduct(cartId: string, productId: string): Promise<void> {
-    await this.commandBus.execute(new AddProductCommand(cartId, productId));
+  async addProduct(cartId: string, productId: string): Promise<CartEntity> {
+    return await this.commandBus.execute(new AddProductCommand(cartId, productId));
   }
 
   async removeProduct(cartId: string, productId: string): Promise<CartEntity> {

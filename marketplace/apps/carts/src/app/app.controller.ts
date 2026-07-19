@@ -23,6 +23,11 @@ export class AppController {
     return await this.appService.createCart(payload.userId);
   }
 
+  @MessagePattern("carts.addProduct")
+  async addProduct(@Payload() payload: { cartId: string, productId: string }): Promise<CartEntity> {
+    return await this.appService.addProduct(payload.cartId, payload.productId);
+  }
+
   @MessagePattern("carts.removeProduct")
   async removeProduct(@Payload() payload: { cartId: string, productId: string }): Promise<CartEntity> {
     return await this.appService.removeProduct(payload.cartId, payload.productId);
