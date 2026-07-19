@@ -6,12 +6,14 @@ import {InjectRepository} from "@nestjs/typeorm";
 import {Inject} from "@nestjs/common";
 import {ClientProxy} from "@nestjs/microservices";
 import {firstValueFrom} from "rxjs";
+import {PinoLogger} from "nestjs-pino";
 
 @CommandHandler(CreateUserCommand)
 export class CreateUserHandler implements ICommandHandler<CreateUserCommand> {
   constructor(
     @InjectRepository(UserEntity) private repository: Repository<UserEntity>,
     @Inject("CARTS_CLIENT") private cartsClient: ClientProxy,
+    private pino: PinoLogger
   ) {
   }
 
@@ -19,7 +21,8 @@ export class CreateUserHandler implements ICommandHandler<CreateUserCommand> {
     const {dto} = command;
     const user = this.repository.create(dto);
     await this.repository.save(user);
-    const cart = await firstValueFrom(this.cartsClient.send("carts.create", {userId: user.userId}));
+    this.pino.info("USER CREATED", {user});
+    await firstValueFrom(this.cartsClient.send("carts.create", {userId: user.userId}));
     return user;
   }
 }

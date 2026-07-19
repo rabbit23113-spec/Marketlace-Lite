@@ -37,7 +37,7 @@ import {LoggerModule} from "nestjs-pino";
     ]),
     LoggerModule.forRoot({
       pinoHttp: {
-        level: 'info',
+        level: process.env.NODE_ENV === "production" ? "info" : "debug",
       }
     })
   ],
