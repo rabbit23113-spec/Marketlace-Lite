@@ -3,6 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import {TypeOrmModule} from "@nestjs/typeorm";
 import {CqrsModule} from "@nestjs/cqrs";
+import {CartEntity} from "./common/entities/cart.entity";
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -12,9 +13,9 @@ import {CqrsModule} from "@nestjs/cqrs";
     database: 'carts',
     synchronize: true,
     autoLoadEntities: true,
-    entities: [],
+    entities: [CartEntity],
   }),
-    TypeOrmModule.forFeature([]),
+    TypeOrmModule.forFeature([CartEntity]),
     CqrsModule.forRoot(),
   ],
   controllers: [AppController],
