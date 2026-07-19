@@ -7,6 +7,7 @@ import {CqrsModule} from "@nestjs/cqrs";
 import {CreateUserHandler} from "./cqrs/handlers/createUser.handler";
 import {UpdateUserHandler} from "./cqrs/handlers/updateUser.handler";
 import {DeleteUserHandler} from "./cqrs/handlers/deleteUser.handler";
+import {FindOneByIdHandler} from "./cqrs/handlers/findOneById.handler";
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -22,7 +23,7 @@ import {DeleteUserHandler} from "./cqrs/handlers/deleteUser.handler";
     CqrsModule.forRoot(),
   ],
   controllers: [AppController],
-  providers: [AppService, CreateUserHandler, UpdateUserHandler, DeleteUserHandler],
+  providers: [AppService, CreateUserHandler, UpdateUserHandler, DeleteUserHandler, FindOneByIdHandler],
 })
 export class AppModule {
 }

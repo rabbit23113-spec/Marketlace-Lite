@@ -24,4 +24,9 @@ export class AppController {
   async deleteUser(@Payload() payload: { userId: string }): Promise<void> {
     await this.appService.deleteUser(payload.userId);
   }
+
+  @MessagePattern("users.findOneById")
+  async findOneById(@Payload() payload: { userId: string }): Promise<UserEntity> {
+    return await this.appService.findOneById(payload.userId);
+  }
 }
