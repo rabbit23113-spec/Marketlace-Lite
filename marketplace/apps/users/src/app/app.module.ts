@@ -10,6 +10,8 @@ import {DeleteUserHandler} from "./cqrs/handlers/deleteUser.handler";
 import {FindOneByIdHandler} from "./cqrs/handlers/findOneById.handler";
 import {FindOneByEmailHandler} from "./cqrs/handlers/findOneByEmail.handler";
 import {FindManyHandler} from "./cqrs/handlers/findMany.handler";
+import {ClientsModule, Transport} from "@nestjs/microservices";
+import {LoggerModule} from "nestjs-pino";
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -23,6 +25,21 @@ import {FindManyHandler} from "./cqrs/handlers/findMany.handler";
   }),
     TypeOrmModule.forFeature([UserEntity]),
     CqrsModule.forRoot(),
+    ClientsModule.register([
+      {
+        name: "CARTS_CLIENT",
+        transport: Transport.RMQ,
+        options: {
+          queue: "CARTS_QUEUE",
+          urls: ["amqp://rabbitmq:5672"]
+        }
+      },
+    ]),
+    LoggerModule.forRoot({
+      pinoHttp: {
+        level: process.env.NODE_ENV === "production" ? "info" : "debug",
+      }
+    })
   ],
   controllers: [AppController],
   providers: [AppService, CreateUserHandler, UpdateUserHandler, DeleteUserHandler, FindOneByIdHandler, FindOneByEmailHandler, FindManyHandler],
