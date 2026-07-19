@@ -12,4 +12,9 @@ export class AppController {
   async findOneById(@Payload() payload: { cartId: string }): Promise<CartEntity> {
     return await this.appService.findOneById(payload.cartId);
   }
+
+  @MessagePattern("carts.findOneByUserId")
+  async findOneByUserId(@Payload() payload: { userId: string }): Promise<CartEntity> {
+    return await this.appService.findOneByUserId(payload.userId);
+  }
 }
