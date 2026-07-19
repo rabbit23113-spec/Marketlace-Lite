@@ -5,6 +5,7 @@ import {TypeOrmModule} from "@nestjs/typeorm";
 import {UserEntity} from "./common/entities/user.entity";
 import {CqrsModule} from "@nestjs/cqrs";
 import {CreateUserHandler} from "./cqrs/handlers/createUser.handler";
+import {UpdateUserHandler} from "./cqrs/handlers/updateUser.handler";
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -20,7 +21,7 @@ import {CreateUserHandler} from "./cqrs/handlers/createUser.handler";
     CqrsModule.forRoot(),
   ],
   controllers: [AppController],
-  providers: [AppService, CreateUserHandler],
+  providers: [AppService, CreateUserHandler, UpdateUserHandler],
 })
 export class AppModule {
 }
