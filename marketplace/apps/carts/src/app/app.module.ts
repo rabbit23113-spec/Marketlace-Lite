@@ -10,6 +10,7 @@ import {FindOneByUserIdHandler} from "./cqrs/handlers/findOneByUserId.handler";
 import {CreateCartHandler} from "./cqrs/handlers/createCart.handler";
 import {AddProductHandler} from "./cqrs/handlers/addProduct.handler";
 import {RemoveProductHandler} from "./cqrs/handlers/removeProduct.handler";
+import {ResetCartHandler} from "./cqrs/handlers/resetCart.handler";
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -43,7 +44,7 @@ import {RemoveProductHandler} from "./cqrs/handlers/removeProduct.handler";
     ])
   ],
   controllers: [AppController],
-  providers: [AppService, FindOneByIdHandler, FindOneByUserIdHandler, CreateCartHandler, AddProductHandler, RemoveProductHandler],
+  providers: [AppService, FindOneByIdHandler, FindOneByUserIdHandler, CreateCartHandler, AddProductHandler, RemoveProductHandler, ResetCartHandler],
 })
 export class AppModule {
 }

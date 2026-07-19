@@ -32,4 +32,9 @@ export class AppController {
   async removeProduct(@Payload() payload: { cartId: string, productId: string }): Promise<CartEntity> {
     return await this.appService.removeProduct(payload.cartId, payload.productId);
   }
+
+  @MessagePattern("carts.reset")
+  async resetCart(@Payload() payload: { cartId: string }): Promise<CartEntity> {
+    return await this.appService.resetCart(payload.cartId);
+  }
 }
