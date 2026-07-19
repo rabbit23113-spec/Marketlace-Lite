@@ -8,6 +8,12 @@
     },
     {
       "path": "./apps/apiGateway"
+    },
+    {
+      "path": "./apps/users-e2e"
+    },
+    {
+      "path": "./apps/users"
     }
   ]
 }
