@@ -4,6 +4,11 @@ services:
       context: "."
       dockerfile: ./apps/users/Dockerfile
     ports: [ "12091:12091" ]
+  carts_service:
+    build:
+      context: "."
+      dockerfile: ./apps/carts/Dockerfile
+    ports: [ "12092:12092" ]
   users_database:
     image: postgres
     ports: [ "5432:5432" ]
@@ -11,3 +16,10 @@ services:
       POSTGRES_USER: "root"
       POSTGRES_PASSWORD: "root"
       POSTGRES_DB: "users"
+  carts_database:
+    image: postgres
+    ports: [ "5433:5432" ]
+    environment:
+      POSTGRES_USER: "root"
+      POSTGRES_PASSWORD: "root"
+      POSTGRES_DB: "carts"
