@@ -29,4 +29,9 @@ export class AppController {
   async findOneById(@Payload() payload: { userId: string }): Promise<UserEntity> {
     return await this.appService.findOneById(payload.userId);
   }
+
+  @MessagePattern("users.findOneByEmail")
+  async findOneByEmail(@Payload() payload: { email: string }): Promise<UserEntity> {
+    return await this.appService.findOneByEmail(payload.email);
+  }
 }

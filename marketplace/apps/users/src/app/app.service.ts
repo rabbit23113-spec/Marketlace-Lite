@@ -7,6 +7,7 @@ import {UpdateUserDto} from "./common/dto/updateUser.dto";
 import {UpdateUserCommand} from "./cqrs/commands/updateUser.command";
 import {DeleteUserCommand} from "./cqrs/commands/deleteUser.command";
 import {FindOneByIdQuery} from "./cqrs/queries/findOneById.query";
+import {FindOneByEmailQuery} from "./cqrs/queries/findOneByEmail.query";
 
 @Injectable()
 export class AppService {
@@ -27,5 +28,9 @@ export class AppService {
 
   async findOneById(userId: string): Promise<UserEntity> {
     return await this.queryBus.execute(new FindOneByIdQuery(userId));
+  }
+
+  async findOneByEmail(email: string): Promise<UserEntity> {
+    return await this.queryBus.execute(new FindOneByEmailQuery(email));
   }
 }
