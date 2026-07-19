@@ -17,4 +17,9 @@ export class AppController {
   async findOneByUserId(@Payload() payload: { userId: string }): Promise<CartEntity> {
     return await this.appService.findOneByUserId(payload.userId);
   }
+
+  @MessagePattern("carts.create")
+  async createOne(@Payload() payload: { userId: string }): Promise<CartEntity> {
+    return await this.appService.createCart(payload.userId);
+  }
 }

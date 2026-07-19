@@ -7,6 +7,7 @@ import {CartEntity} from "./common/entities/cart.entity";
 import {ClientsModule, Transport} from "@nestjs/microservices";
 import {FindOneByIdHandler} from "./cqrs/handlers/findOneById.handler";
 import {FindOneByUserIdHandler} from "./cqrs/handlers/findOneByUserId.handler";
+import {CreateCartHandler} from "./cqrs/handlers/createCart.handler";
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -32,7 +33,7 @@ import {FindOneByUserIdHandler} from "./cqrs/handlers/findOneByUserId.handler";
     ])
   ],
   controllers: [AppController],
-  providers: [AppService, FindOneByIdHandler, FindOneByUserIdHandler],
+  providers: [AppService, FindOneByIdHandler, FindOneByUserIdHandler, CreateCartHandler],
 })
 export class AppModule {
 }

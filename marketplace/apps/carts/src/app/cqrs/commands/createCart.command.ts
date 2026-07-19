@@ -1,7 +1,7 @@
-import {Query} from "@nestjs/cqrs";
 import {CartEntity} from "../../common/entities/cart.entity";
+import {Command} from "@nestjs/cqrs";
 
-export class FindOneByUserIdQuery extends Query<CartEntity> {
+export class CreateCartCommand extends Command<CartEntity> {
   constructor(public readonly userId: string) {
     super();
   }
