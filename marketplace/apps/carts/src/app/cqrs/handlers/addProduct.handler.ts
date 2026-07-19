@@ -6,12 +6,14 @@ import {Repository} from "typeorm";
 import {Inject, NotFoundException} from "@nestjs/common";
 import {ClientProxy} from "@nestjs/microservices";
 import {firstValueFrom} from "rxjs";
+import {PinoLogger} from "nestjs-pino";
 
 @CommandHandler(AddProductCommand)
 export class AddProductHandler implements ICommandHandler<AddProductCommand> {
   constructor(
     @InjectRepository(CartEntity) private repository: Repository<CartEntity>,
     @Inject("PRODUCTS_CLIENT") private productsClient: ClientProxy,
+    private pino: PinoLogger,
   ) {
   }
 
@@ -23,6 +25,7 @@ export class AddProductHandler implements ICommandHandler<AddProductCommand> {
     if (!product) throw new NotFoundException("Product not found");
     const newProductIds: string[] = [...cart.productIds, productId];
     await this.repository.update(cartId, {productIds: newProductIds});
+    this.pino.info(`PRODUCT WITH ID ${productId} ADDED TO THE CART`, cart);
     return cart;
   }
 }

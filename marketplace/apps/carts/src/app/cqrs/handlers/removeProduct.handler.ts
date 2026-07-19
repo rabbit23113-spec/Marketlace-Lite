@@ -4,10 +4,14 @@ import {InjectRepository} from "@nestjs/typeorm";
 import {CartEntity} from "../../common/entities/cart.entity";
 import {Repository} from "typeorm";
 import {BadRequestException, NotFoundException} from "@nestjs/common";
+import {PinoLogger} from "nestjs-pino";
 
 @CommandHandler(RemoveProductCommand)
 export class RemoveProductHandler implements ICommandHandler<RemoveProductCommand> {
-  constructor(@InjectRepository(CartEntity) private repository: Repository<CartEntity>) {
+  constructor(
+    @InjectRepository(CartEntity) private repository: Repository<CartEntity>,
+    private pino: PinoLogger,
+  ) {
   }
 
   async execute(command: RemoveProductCommand): Promise<CartEntity> {
@@ -19,6 +23,7 @@ export class RemoveProductHandler implements ICommandHandler<RemoveProductComman
 
     const newProductIds: string[] = cart.productIds.filter((id: string) => id !== productId);
     await this.repository.update(cartId, {productIds: newProductIds});
+    this.pino.info(`PRODUCT WITH ID ${productId} DELETED FROM CART`, cart);
     return cart;
   }
 }
