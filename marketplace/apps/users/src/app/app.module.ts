@@ -6,6 +6,7 @@ import {UserEntity} from "./common/entities/user.entity";
 import {CqrsModule} from "@nestjs/cqrs";
 import {CreateUserHandler} from "./cqrs/handlers/createUser.handler";
 import {UpdateUserHandler} from "./cqrs/handlers/updateUser.handler";
+import {DeleteUserHandler} from "./cqrs/handlers/deleteUser.handler";
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -21,7 +22,7 @@ import {UpdateUserHandler} from "./cqrs/handlers/updateUser.handler";
     CqrsModule.forRoot(),
   ],
   controllers: [AppController],
-  providers: [AppService, CreateUserHandler, UpdateUserHandler],
+  providers: [AppService, CreateUserHandler, UpdateUserHandler, DeleteUserHandler],
 })
 export class AppModule {
 }
