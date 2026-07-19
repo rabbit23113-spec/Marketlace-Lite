@@ -5,6 +5,7 @@ import {FindOneByIdQuery} from "./cqrs/queries/findOneById.query";
 import {FindOneByUserIdQuery} from "./cqrs/queries/findOneByUserId.query";
 import {CreateCartCommand} from "./cqrs/commands/createCart.command";
 import {AddProductCommand} from "./cqrs/commands/addProduct.command";
+import {RemoveProductCommand} from "./cqrs/commands/removeProduct.command";
 
 @Injectable()
 export class AppService {
@@ -25,5 +26,9 @@ export class AppService {
 
   async addProduct(cartId: string, productId: string): Promise<void> {
     await this.commandBus.execute(new AddProductCommand(cartId, productId));
+  }
+
+  async removeProduct(cartId: string, productId: string): Promise<CartEntity> {
+    return await this.commandBus.execute(new RemoveProductCommand(cartId, productId));
   }
 }
