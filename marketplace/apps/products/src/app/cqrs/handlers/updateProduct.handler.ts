@@ -1,14 +1,17 @@
 import {CommandHandler, ICommandHandler} from "@nestjs/cqrs";
-import {UpdateProductDto} from "../../common/dto/updateProduct.dto";
 import {UpdateProductCommand} from "../commands/updateProduct.command";
 import {InjectRepository} from "@nestjs/typeorm";
 import {ProductEntity} from "../../common/entities/product.entity";
 import {Repository} from "typeorm";
 import {NotFoundException} from "@nestjs/common";
+import {PinoLogger} from "nestjs-pino";
 
 @CommandHandler(UpdateProductCommand)
 export class UpdateProductHandler implements ICommandHandler<UpdateProductCommand> {
-  constructor(@InjectRepository(ProductEntity) private repository: Repository<ProductEntity>) {
+  constructor(
+    @InjectRepository(ProductEntity) private repository: Repository<ProductEntity>,
+    private pino: PinoLogger,
+  ) {
   }
 
   async execute(command: UpdateProductCommand): Promise<ProductEntity> {
@@ -18,6 +21,7 @@ export class UpdateProductHandler implements ICommandHandler<UpdateProductComman
     if (!product) throw new NotFoundException("Product not found");
 
     await this.repository.update(productId, dto);
+    this.pino.info("PRODUCT UPDATED", product);
     return product;
   }
 }
