@@ -2,8 +2,9 @@ import {Controller} from '@nestjs/common';
 import {AppService} from './app.service';
 import {MessagePattern, Payload} from "@nestjs/microservices";
 import {SessionEntity} from "./common/entities/session.entity";
-import {SignInDto} from "./common/dto/authRequest.dto";
+import {SignInDto} from "./common/dto/signIn.dto";
 import {AuthResponseDto} from "./common/dto/authResponse.dto";
+import {SignUpDto} from "./common/dto/signUp.dto";
 
 @Controller()
 export class AppController {
@@ -23,5 +24,10 @@ export class AppController {
   @MessagePattern("auth.signIn")
   async signIn(@Payload() payload: { dto: SignInDto }): Promise<AuthResponseDto> {
     return await this.appService.signIn(payload.dto);
+  }
+
+  @MessagePattern("auth.signUp")
+  async signUp(@Payload() payload: { dto: SignUpDto }): Promise<AuthResponseDto> {
+    return await this.appService.signUp(payload.dto);
   }
 }

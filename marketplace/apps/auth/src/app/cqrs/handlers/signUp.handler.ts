@@ -1,20 +1,20 @@
 import {CommandHandler, ICommandHandler} from "@nestjs/cqrs";
-import {SignInCommand} from "../commands/signIn.command";
+import {SignUpCommand} from "../commands/signUp.command";
 import {InjectRepository} from "@nestjs/typeorm";
 import {SessionEntity} from "../../common/entities/session.entity";
 import {Repository} from "typeorm";
-import {AuthResponseDto} from "../../common/dto/authResponse.dto";
-import {Inject, UnauthorizedException} from "@nestjs/common";
 import {ClientProxy} from "@nestjs/microservices";
-import {JwtService} from "@nestjs/jwt";
-import {randomBytes} from "node:crypto";
-import {firstValueFrom} from "rxjs";
+import {Inject} from "@nestjs/common";
+import {AuthResponseDto} from "../../common/dto/authResponse.dto";
 import {UserDto} from "../../common/dto/user.dto";
+import {firstValueFrom} from "rxjs";
 import bcrypt from "bcrypt";
+import {randomBytes} from "node:crypto";
 import {PinoLogger} from "nestjs-pino";
+import {JwtService} from "@nestjs/jwt";
 
-@CommandHandler(SignInCommand)
-export class SignInHandler implements ICommandHandler<SignInCommand> {
+@CommandHandler(SignUpCommand)
+export class SignUpHandler implements ICommandHandler<SignUpCommand> {
   constructor(
     @InjectRepository(SessionEntity) private repository: Repository<SessionEntity>,
     @Inject("USERS_CLIENT") private usersClient: ClientProxy,
@@ -23,16 +23,17 @@ export class SignInHandler implements ICommandHandler<SignInCommand> {
   ) {
   }
 
-  async execute(command: SignInCommand): Promise<AuthResponseDto> {
-    this.pino.info("SIGNING IN...")
-    const {email, password} = command.dto;
-    this.pino.info("CHECKING IF USER EXISTS...")
-    const user: UserDto | null = await firstValueFrom(this.usersClient.send("users.findOneByEmail", {email}));
-    if (!user) throw new UnauthorizedException();
+  async execute(command: SignUpCommand): Promise<AuthResponseDto> {
+    this.pino.info("SIGNING UP...")
 
-    this.pino.info("CHECKING IF PASSWORD MATCH...")
-    const isMatch: boolean = await bcrypt.compare(password, user.passwordHash);
-    if (!isMatch) throw new UnauthorizedException();
+    const {password} = command.dto;
+    const passwordHash: string = await bcrypt.hash(password, 14);
+
+    this.pino.info("CREATING USER ENTITY...")
+    const user: UserDto = await firstValueFrom(this.usersClient.send("users.create", {
+      ...command.dto,
+      password: passwordHash
+    }));
 
     this.pino.info("CREATING T0KENS...")
     const accessToken: string = await this.jwtService.signAsync({sub: user.userId});
@@ -47,8 +48,7 @@ export class SignInHandler implements ICommandHandler<SignInCommand> {
     });
     await this.repository.save(session);
 
-    this.pino.info("USER SIGNED IN", user);
+    this.pino.info("USER SIGNED UP", user);
     return {accessToken, refreshToken, sessionId: session.sessionId};
   }
-
 }

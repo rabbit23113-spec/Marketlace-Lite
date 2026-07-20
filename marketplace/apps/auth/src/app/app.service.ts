@@ -3,9 +3,11 @@ import {CommandBus, QueryBus} from "@nestjs/cqrs";
 import {SessionEntity} from "./common/entities/session.entity";
 import {FindOneByIdQuery} from "./cqrs/queries/findOneById.query";
 import {FindByUserIdQuery} from "./cqrs/queries/findByUserId.query";
-import {SignInDto} from "./common/dto/authRequest.dto";
+import {SignInDto} from "./common/dto/signIn.dto";
 import {AuthResponseDto} from "./common/dto/authResponse.dto";
 import {SignInCommand} from "./cqrs/commands/signIn.command";
+import {SignUpDto} from "./common/dto/signUp.dto";
+import {SignUpCommand} from "./cqrs/commands/signUp.command";
 
 @Injectable()
 export class AppService {
@@ -22,5 +24,9 @@ export class AppService {
 
   async signIn(dto: SignInDto): Promise<AuthResponseDto> {
     return await this.commandBus.execute(new SignInCommand(dto));
+  }
+
+  async signUp(dto: SignUpDto): Promise<AuthResponseDto> {
+    return await this.commandBus.execute(new SignUpCommand(dto));
   }
 }

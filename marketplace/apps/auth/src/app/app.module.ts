@@ -10,6 +10,7 @@ import {JwtModule} from "@nestjs/jwt";
 import {SignInHandler} from "./cqrs/handlers/signIn.handler";
 import {FindByUserIdHandler} from "./cqrs/handlers/findByUserId.handler";
 import {FindOneByIdHandler} from "./cqrs/handlers/findOneById.handler";
+import {SignUpHandler} from "./cqrs/handlers/signUp.handler";
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -46,7 +47,7 @@ import {FindOneByIdHandler} from "./cqrs/handlers/findOneById.handler";
     })
   ],
   controllers: [AppController],
-  providers: [AppService, FindOneByIdHandler, FindByUserIdHandler, SignInHandler],
+  providers: [AppService, FindOneByIdHandler, FindByUserIdHandler, SignInHandler, SignUpHandler],
 })
 export class AppModule {
 }
