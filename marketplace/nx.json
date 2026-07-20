@@ -58,7 +58,9 @@
         "apps/users-e2e/**/*",
         "apps/carts-e2e/**/*",
         "apps/auth-e2e/**/*",
-        "apps/brands-e2e/**/*"
+        "apps/brands-e2e/**/*",
+        "apps/categories-e2e/**/*",
+        "apps/products-e2e/**/*"
       ]
     },
     {

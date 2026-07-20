@@ -32,6 +32,18 @@
     },
     {
       "path": "./apps/brands"
+    },
+    {
+      "path": "./apps/categories-e2e"
+    },
+    {
+      "path": "./apps/categories"
+    },
+    {
+      "path": "./apps/products-e2e"
+    },
+    {
+      "path": "./apps/products"
     }
   ]
 }

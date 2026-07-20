@@ -18,7 +18,17 @@ services:
     build:
       context: "."
       dockerfile: ./apps/brands/Dockerfile
-    ports: [ "12094:12093" ]
+    ports: [ "12094:12094" ]
+  categories_service:
+    build:
+      context: "."
+      dockerfile: ./apps/categories/Dockerfile
+    ports: [ "12095:12095" ]
+  products_service:
+    build:
+      context: "."
+      dockerfile: ./apps/products/Dockerfile
+    ports: [ "12096:12096" ]
   users_database:
     image: postgres
     ports: [ "5432:5432" ]
@@ -47,3 +57,17 @@ services:
       POSTGRES_USER: "root"
       POSTGRES_PASSWORD: "root"
       POSTGRES_DB: "brands"
+  categories_database:
+    image: postgres
+    ports: [ "5436:5432" ]
+    environment:
+      POSTGRES_USER: "root"
+      POSTGRES_PASSWORD: "root"
+      POSTGRES_DB: "categories"
+  products_database:
+    image: postgres
+    ports: [ "5437:5432" ]
+    environment:
+      POSTGRES_USER: "root"
+      POSTGRES_PASSWORD: "root"
+      POSTGRES_DB: "products"

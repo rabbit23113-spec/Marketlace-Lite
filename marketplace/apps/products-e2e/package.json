@@ -1,0 +1,26 @@
+{
+  "name": "@marketplace/products-e2e",
+  "version": "0.0.1",
+  "private": true,
+  "nx": {
+    "implicitDependencies": [
+      "@marketplace/products"
+    ],
+    "targets": {
+      "e2e": {
+        "executor": "@nx/jest:jest",
+        "outputs": [
+          "{projectRoot}/test-output/jest/coverage"
+        ],
+        "dependsOn": [
+          "@marketplace/products:build",
+          "@marketplace/products:serve"
+        ],
+        "options": {
+          "jestConfig": "apps/products-e2e/jest.config.cts",
+          "passWithNoTests": true
+        }
+      }
+    }
+  }
+}

@@ -6,6 +6,7 @@ import {LoggerModule} from "nestjs-pino";
 import {CqrsModule} from "@nestjs/cqrs";
 import {FindAllHandler} from "./cqrs/handlers/findAll.handler";
 import {CreateCategoryHandler} from "./cqrs/handlers/createCategory.handler";
+import {CategoryEntity} from "./common/entities/category.entity";
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -15,9 +16,9 @@ import {CreateCategoryHandler} from "./cqrs/handlers/createCategory.handler";
     database: 'categories',
     synchronize: true,
     autoLoadEntities: true,
-    entities: [],
+    entities: [CategoryEntity],
   }),
-    TypeOrmModule.forFeature([]),
+    TypeOrmModule.forFeature([CategoryEntity]),
     CqrsModule.forRoot(),
     LoggerModule.forRoot({
       pinoHttp: {
