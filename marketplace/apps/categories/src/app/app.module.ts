@@ -4,6 +4,7 @@ import {AppService} from './app.service';
 import {TypeOrmModule} from "@nestjs/typeorm";
 import {LoggerModule} from "nestjs-pino";
 import {CqrsModule} from "@nestjs/cqrs";
+import {FindAllHandler} from "./cqrs/handlers/findAll.handler";
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -24,7 +25,7 @@ import {CqrsModule} from "@nestjs/cqrs";
     }),
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, FindAllHandler],
 })
 export class AppModule {
 }
