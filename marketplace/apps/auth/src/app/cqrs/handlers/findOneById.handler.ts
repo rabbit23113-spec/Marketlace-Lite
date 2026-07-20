@@ -7,7 +7,7 @@ import {NotFoundException} from "@nestjs/common";
 
 @QueryHandler(FindOneByIdQuery)
 export class FindOneByIdHandler implements IQueryHandler<FindOneByIdQuery> {
-  constructor(@InjectRepository(SessionEntity) private readonly repository: Repository<SessionEntity>) {
+  constructor(@InjectRepository(SessionEntity) private repository: Repository<SessionEntity>) {
   }
 
   async execute(query: FindOneByIdQuery): Promise<SessionEntity> {

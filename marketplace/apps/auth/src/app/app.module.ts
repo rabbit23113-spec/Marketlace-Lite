@@ -6,6 +6,8 @@ import {TypeOrmModule} from "@nestjs/typeorm";
 import {LoggerModule} from "nestjs-pino";
 import {CqrsModule} from "@nestjs/cqrs";
 import {SessionEntity} from "./common/entities/session.entity";
+import {FindOneByIdQuery} from "./cqrs/queries/findOneById.query";
+import {FindByUserIdQuery} from "./cqrs/queries/findByUserId.query";
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -36,7 +38,7 @@ import {SessionEntity} from "./common/entities/session.entity";
     })
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, FindOneByIdQuery, FindByUserIdQuery],
 })
 export class AppModule {
 }
