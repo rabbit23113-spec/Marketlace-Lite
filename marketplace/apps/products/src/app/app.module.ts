@@ -11,6 +11,7 @@ import {FindByCategoryIdHandler} from "./cqrs/handlers/findByCategoryId.handler"
 import {FindByBrandIdHandler} from "./cqrs/handlers/findByBrandId.handler";
 import {CreateProductHandler} from "./cqrs/handlers/createProduct.handler";
 import {UpdateProductHandler} from "./cqrs/handlers/updateProduct.handler";
+import {DeleteProductHandler} from "./cqrs/handlers/deleteProduct.handler";
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -31,7 +32,7 @@ import {UpdateProductHandler} from "./cqrs/handlers/updateProduct.handler";
     }),
   ],
   controllers: [AppController],
-  providers: [AppService, FindAllHandler, FindOneByIdHandler, FindByCategoryIdHandler, FindByBrandIdHandler, CreateProductHandler, UpdateProductHandler],
+  providers: [AppService, FindAllHandler, FindOneByIdHandler, FindByCategoryIdHandler, FindByBrandIdHandler, CreateProductHandler, UpdateProductHandler, DeleteProductHandler],
 })
 export class AppModule {
 }

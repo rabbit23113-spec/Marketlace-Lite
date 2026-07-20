@@ -9,6 +9,7 @@ import {CreateProductDto} from "./common/dto/createProduct.dto";
 import {CreateProductCommand} from "./cqrs/commands/createProduct.command";
 import {UpdateProductDto} from "./common/dto/updateProduct.dto";
 import {UpdateProductCommand} from "./cqrs/commands/updateProduct.command";
+import {DeleteProductCommand} from "./cqrs/commands/deleteProduct.command";
 
 @Injectable()
 export class AppService {
@@ -37,5 +38,9 @@ export class AppService {
 
   async updateProduct(productId: string, dto: UpdateProductDto): Promise<ProductEntity> {
     return await this.commandBus.execute(new UpdateProductCommand(productId, dto));
+  }
+
+  async deleteProduct(productId: string): Promise<void> {
+    await this.commandBus.execute(new DeleteProductCommand(productId));
   }
 }
