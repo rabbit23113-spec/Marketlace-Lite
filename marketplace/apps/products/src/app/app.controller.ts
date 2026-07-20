@@ -2,6 +2,7 @@ import {Controller} from '@nestjs/common';
 import {AppService} from './app.service';
 import {MessagePattern, Payload} from "@nestjs/microservices";
 import {ProductEntity} from "./common/entities/product.entity";
+import {CreateProductDto} from "./common/dto/createProduct.dto";
 
 @Controller()
 export class AppController {
@@ -26,6 +27,11 @@ export class AppController {
   @MessagePattern("products.findByBrandId")
   async findByBrandId(@Payload() payload: { brandId: string }): Promise<ProductEntity[]> {
     return await this.appService.findByBrandId(payload.brandId);
+  }
+
+  @MessagePattern("products.create")
+  async create(@Payload() payload: { dto: CreateProductDto }): Promise<ProductEntity> {
+    return await this.appService.createProduct(payload.dto);
   }
 
 }
