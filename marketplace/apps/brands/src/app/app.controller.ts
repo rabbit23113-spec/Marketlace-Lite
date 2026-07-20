@@ -18,4 +18,9 @@ export class AppController {
     return await this.appService.findOneById(payload.brandId);
   }
 
+  @MessagePattern("brand.findOneByName")
+  async findOneByName(@Payload() payload: { name: string }): Promise<BrandEntity> {
+    return await this.appService.findOneByName(payload.name);
+  }
+
 }
