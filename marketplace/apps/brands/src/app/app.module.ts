@@ -6,6 +6,7 @@ import {TypeOrmModule} from "@nestjs/typeorm";
 import {BrandEntity} from "./common/entities/brand.entity";
 import {LoggerModule} from "nestjs-pino";
 import {FindAllHandler} from "./cqrs/handlers/findAll.handler";
+import {FindOneByIdHandler} from "./cqrs/handlers/findOneById.handler";
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -26,7 +27,7 @@ import {FindAllHandler} from "./cqrs/handlers/findAll.handler";
     }),
   ],
   controllers: [AppController],
-  providers: [AppService, FindAllHandler],
+  providers: [AppService, FindAllHandler, FindOneByIdHandler],
 })
 export class AppModule {
 }

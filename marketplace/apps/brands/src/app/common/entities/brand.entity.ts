@@ -5,7 +5,7 @@ export class BrandEntity {
   @PrimaryGeneratedColumn("uuid", {name: "brand_id"})
   brandId: string;
 
-  @Column({name: "name"})
+  @Column({name: "name", unique: true})
   name: string;
 
   @Column({name: "description"})
