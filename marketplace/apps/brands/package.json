@@ -85,6 +85,7 @@
   "dependencies": {
     "@nestjs/common": "^11.0.0",
     "@nestjs/core": "^11.0.0",
+    "@nestjs/microservices": "^11.1.28",
     "@nestjs/platform-express": "^11.0.0",
     "@nestjs/typeorm": "^11.0.3",
     "reflect-metadata": "^0.2.0",
