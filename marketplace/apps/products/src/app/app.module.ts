@@ -4,6 +4,7 @@ import {AppService} from './app.service';
 import {TypeOrmModule} from "@nestjs/typeorm";
 import {CqrsModule} from "@nestjs/cqrs";
 import {LoggerModule} from "nestjs-pino";
+import {ProductEntity} from "./common/entities/product.entity";
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -13,9 +14,9 @@ import {LoggerModule} from "nestjs-pino";
     database: 'products',
     synchronize: true,
     autoLoadEntities: true,
-    entities: [],
+    entities: [ProductEntity],
   }),
-    TypeOrmModule.forFeature([]),
+    TypeOrmModule.forFeature([ProductEntity]),
     CqrsModule.forRoot(),
     LoggerModule.forRoot({
       pinoHttp: {
