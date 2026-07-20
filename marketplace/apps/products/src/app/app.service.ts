@@ -7,6 +7,8 @@ import {FindByCategoryIdQuery} from "./cqrs/queries/findByCategoryId.query";
 import {FindByBrandIdQuery} from "./cqrs/queries/findByBrandId.query";
 import {CreateProductDto} from "./common/dto/createProduct.dto";
 import {CreateProductCommand} from "./cqrs/commands/createProduct.command";
+import {UpdateProductDto} from "./common/dto/updateProduct.dto";
+import {UpdateProductCommand} from "./cqrs/commands/updateProduct.command";
 
 @Injectable()
 export class AppService {
@@ -31,5 +33,9 @@ export class AppService {
 
   async createProduct(dto: CreateProductDto): Promise<ProductEntity> {
     return await this.commandBus.execute(new CreateProductCommand(dto));
+  }
+
+  async updateProduct(productId: string, dto: UpdateProductDto): Promise<ProductEntity> {
+    return await this.commandBus.execute(new UpdateProductCommand(productId, dto));
   }
 }
