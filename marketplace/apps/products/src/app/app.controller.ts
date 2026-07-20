@@ -18,4 +18,9 @@ export class AppController {
     return await this.appService.findOneById(payload.productId);
   }
 
+  @MessagePattern("products.findByCategoryId")
+  async findByCategoryId(@Payload() payload: { categoryId: string }): Promise<ProductEntity[]> {
+    return await this.appService.findByCategoryId(payload.categoryId);
+  }
+
 }
