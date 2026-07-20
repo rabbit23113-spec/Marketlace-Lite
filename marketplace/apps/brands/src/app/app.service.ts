@@ -6,6 +6,8 @@ import {FindOneByIdQuery} from "./cqrs/queries/findOneById.query";
 import {FindOneByNameQuery} from "./cqrs/queries/findOneByName.query";
 import {CreateBrandDto} from "./common/dto/createBrand.dto";
 import {CreateBrandCommand} from "./cqrs/commands/createBrand.command";
+import {UpdateBrandDto} from "./common/dto/updateBrand.dto";
+import {UpdateBrandCommand} from "./cqrs/commands/updateBrand.command";
 
 @Injectable()
 export class AppService {
@@ -26,5 +28,9 @@ export class AppService {
 
   async create(dto: CreateBrandDto): Promise<BrandEntity> {
     return await this.commandBus.execute(new CreateBrandCommand(dto));
+  }
+
+  async updateOne(brandId: string, dto: UpdateBrandDto): Promise<BrandEntity> {
+    return await this.commandBus.execute(new UpdateBrandCommand(brandId, dto));
   }
 }
