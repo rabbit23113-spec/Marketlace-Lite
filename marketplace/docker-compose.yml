@@ -12,8 +12,13 @@ services:
   auth_service:
     build:
       context: "."
-      dockerfile: ./apps/users/Dockerfile
+      dockerfile: ./apps/auth/Dockerfile
     ports: [ "12093:12093" ]
+  brands_service:
+    build:
+      context: "."
+      dockerfile: ./apps/brands/Dockerfile
+    ports: [ "12094:12093" ]
   users_database:
     image: postgres
     ports: [ "5432:5432" ]
@@ -35,3 +40,10 @@ services:
       POSTGRES_USER: "root"
       POSTGRES_PASSWORD: "root"
       POSTGRES_DB: "auth"
+  brands_database:
+    image: postgres
+    ports: [ "5435:5432" ]
+    environment:
+      POSTGRES_USER: "root"
+      POSTGRES_PASSWORD: "root"
+      POSTGRES_DB: "brands"

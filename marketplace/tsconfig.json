@@ -26,6 +26,12 @@
     },
     {
       "path": "./apps/auth"
+    },
+    {
+      "path": "./apps/brands-e2e"
+    },
+    {
+      "path": "./apps/brands"
     }
   ]
 }
