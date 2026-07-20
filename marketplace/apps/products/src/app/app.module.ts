@@ -8,6 +8,7 @@ import {ProductEntity} from "./common/entities/product.entity";
 import {FindAllHandler} from "./cqrs/handlers/findAll.handler";
 import {FindOneByIdHandler} from "./cqrs/handlers/findOneById.handler";
 import {FindByCategoryIdHandler} from "./cqrs/handlers/findByCategoryId.handler";
+import {FindByBrandIdHandler} from "./cqrs/handlers/findByBrandId.handler";
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -28,7 +29,7 @@ import {FindByCategoryIdHandler} from "./cqrs/handlers/findByCategoryId.handler"
     }),
   ],
   controllers: [AppController],
-  providers: [AppService, FindAllHandler, FindOneByIdHandler, FindByCategoryIdHandler],
+  providers: [AppService, FindAllHandler, FindOneByIdHandler, FindByCategoryIdHandler, FindByBrandIdHandler],
 })
 export class AppModule {
 }

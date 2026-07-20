@@ -4,6 +4,7 @@ import {ProductEntity} from "./common/entities/product.entity";
 import {FindAllQuery} from "./cqrs/queries/findAll.query";
 import {FindOneByIdQuery} from "./cqrs/queries/findOneById.query";
 import {FindByCategoryIdQuery} from "./cqrs/queries/findByCategoryId.query";
+import {FindByBrandIdQuery} from "./cqrs/queries/findByBrandId.query";
 
 @Injectable()
 export class AppService {
@@ -20,5 +21,9 @@ export class AppService {
 
   async findByCategoryId(categoryId: string): Promise<ProductEntity[]> {
     return await this.queryBus.execute(new FindByCategoryIdQuery(categoryId));
+  }
+
+  async findByBrandId(brandId: string): Promise<ProductEntity[]> {
+    return await this.queryBus.execute(new FindByBrandIdQuery(brandId));
   }
 }

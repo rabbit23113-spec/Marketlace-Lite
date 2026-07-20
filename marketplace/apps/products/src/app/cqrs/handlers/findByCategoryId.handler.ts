@@ -3,7 +3,6 @@ import {FindByCategoryIdQuery} from "../queries/findByCategoryId.query";
 import {InjectRepository} from "@nestjs/typeorm";
 import {ProductEntity} from "../../common/entities/product.entity";
 import {Repository} from "typeorm";
-import {FindOneByIdHandler} from "./findOneById.handler";
 
 @QueryHandler(FindByCategoryIdQuery)
 export class FindByCategoryIdHandler implements IQueryHandler<FindByCategoryIdQuery> {
