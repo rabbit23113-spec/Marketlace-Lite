@@ -6,8 +6,10 @@ import {TypeOrmModule} from "@nestjs/typeorm";
 import {LoggerModule} from "nestjs-pino";
 import {CqrsModule} from "@nestjs/cqrs";
 import {SessionEntity} from "./common/entities/session.entity";
-import {FindOneByIdQuery} from "./cqrs/queries/findOneById.query";
-import {FindByUserIdQuery} from "./cqrs/queries/findByUserId.query";
+import {JwtModule} from "@nestjs/jwt";
+import {SignInHandler} from "./cqrs/handlers/signIn.handler";
+import {FindByUserIdHandler} from "./cqrs/handlers/findByUserId.handler";
+import {FindOneByIdHandler} from "./cqrs/handlers/findOneById.handler";
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -35,10 +37,16 @@ import {FindByUserIdQuery} from "./cqrs/queries/findByUserId.query";
       pinoHttp: {
         level: process.env.NODE_ENV === "production" ? "info" : "debug",
       }
+    }),
+    JwtModule.register({
+      secret: "secret",
+      signOptions: {
+        expiresIn: '10m'
+      }
     })
   ],
   controllers: [AppController],
-  providers: [AppService, FindOneByIdQuery, FindByUserIdQuery],
+  providers: [AppService, FindOneByIdHandler, FindByUserIdHandler, SignInHandler],
 })
 export class AppModule {
 }
