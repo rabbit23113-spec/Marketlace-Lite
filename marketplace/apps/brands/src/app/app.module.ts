@@ -1,11 +1,11 @@
-import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import {ClientsModule, Transport} from "@nestjs/microservices";
+import {Module} from '@nestjs/common';
+import {AppController} from './app.controller';
+import {AppService} from './app.service';
 import {CqrsModule} from "@nestjs/cqrs";
 import {TypeOrmModule} from "@nestjs/typeorm";
 import {BrandEntity} from "./common/entities/brand.entity";
 import {LoggerModule} from "nestjs-pino";
+import {FindAllHandler} from "./cqrs/handlers/findAll.handler";
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -19,16 +19,6 @@ import {LoggerModule} from "nestjs-pino";
   }),
     TypeOrmModule.forFeature([BrandEntity]),
     CqrsModule.forRoot(),
-    ClientsModule.register([
-      {
-        name: "USERS_CLIENT",
-        transport: Transport.RMQ,
-        options: {
-          queue: "USERS_QUEUE",
-          urls: ["amqp://rabbitmq:5672"]
-        }
-      },
-    ]),
     LoggerModule.forRoot({
       pinoHttp: {
         level: process.env.NODE_ENV === "production" ? "info" : "debug",
@@ -36,6 +26,7 @@ import {LoggerModule} from "nestjs-pino";
     }),
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, FindAllHandler],
 })
-export class AppModule {}
+export class AppModule {
+}
