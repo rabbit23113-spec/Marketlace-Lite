@@ -16,6 +16,7 @@ export class CreatePromotionHandler implements ICommandHandler<CreatePromotionCo
   async execute(command: CreatePromotionCommand): Promise<PromotionEntity> {
     const promotion: PromotionEntity = this.repository.create(command.dto);
     await this.repository.save(promotion);
+    this.pino.info("PROMOTION CREATED", promotion);
     return promotion;
   }
 }
