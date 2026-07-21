@@ -44,6 +44,12 @@
     },
     {
       "path": "./apps/products"
+    },
+    {
+      "path": "./apps/promotions-e2e"
+    },
+    {
+      "path": "./apps/promotions"
     }
   ]
 }

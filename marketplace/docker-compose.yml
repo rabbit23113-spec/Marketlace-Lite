@@ -29,6 +29,11 @@ services:
       context: "."
       dockerfile: ./apps/products/Dockerfile
     ports: [ "12096:12096" ]
+  promotions_service:
+    build:
+      context: "."
+      dockerfile: ./apps/promotions/Dockerfile
+    ports: [ "12097:12097" ]
   users_database:
     image: postgres
     ports: [ "5432:5432" ]
@@ -71,3 +76,10 @@ services:
       POSTGRES_USER: "root"
       POSTGRES_PASSWORD: "root"
       POSTGRES_DB: "products"
+  promotions_database:
+    image: postgres
+    ports: [ "5438:5432" ]
+    environment:
+      POSTGRES_USER: "root"
+      POSTGRES_PASSWORD: "root"
+      POSTGRES_DB: "promotions"

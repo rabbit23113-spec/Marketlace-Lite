@@ -7,13 +7,13 @@ async function bootstrap() {
   const app = await NestFactory.createMicroservice<MicroserviceOptions>(AppModule, {
     transport: Transport.RMQ,
     options: {
-      queue: "PRODUCTS_QUEUE",
+      queue: "PROMOTIONS_QUEUE",
       urls: ["amqp://rabbitmq:5672"],
     }
   })
   await app.listen();
   Logger.log(
-    `🚀 Products service is running`,
+    `🚀 Promotions service is running`,
   );
 }
 
