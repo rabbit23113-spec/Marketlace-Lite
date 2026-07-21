@@ -1,0 +1,26 @@
+{
+  "name": "@marketplace/notifications-e2e",
+  "version": "0.0.1",
+  "private": true,
+  "nx": {
+    "implicitDependencies": [
+      "@marketplace/notifications"
+    ],
+    "targets": {
+      "e2e": {
+        "executor": "@nx/jest:jest",
+        "outputs": [
+          "{projectRoot}/test-output/jest/coverage"
+        ],
+        "dependsOn": [
+          "@marketplace/notifications:build",
+          "@marketplace/notifications:serve"
+        ],
+        "options": {
+          "jestConfig": "apps/notifications-e2e/jest.config.cts",
+          "passWithNoTests": true
+        }
+      }
+    }
+  }
+}

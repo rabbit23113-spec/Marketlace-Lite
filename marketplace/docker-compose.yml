@@ -34,6 +34,11 @@ services:
       context: "."
       dockerfile: ./apps/promotions/Dockerfile
     ports: [ "12097:12097" ]
+  notifications_service:
+    build:
+      context: "."
+      dockerfile: ./apps/notifications/Dockerfile
+    ports: [ "12098:12098" ]
   users_database:
     image: postgres
     ports: [ "5432:5432" ]
@@ -83,3 +88,10 @@ services:
       POSTGRES_USER: "root"
       POSTGRES_PASSWORD: "root"
       POSTGRES_DB: "promotions"
+  notifications_database:
+    image: postgres
+    ports: [ "5439:5432" ]
+    environment:
+      POSTGRES_USER: "root"
+      POSTGRES_PASSWORD: "root"
+      POSTGRES_DB: "notifications"
