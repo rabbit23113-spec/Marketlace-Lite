@@ -7,6 +7,7 @@ import {LoggerModule} from "nestjs-pino";
 import {ConfigModule} from "@nestjs/config";
 import {YookassaModule} from '@companix/yookassa';
 import {PaymentEntity} from "./common/entities/payment.entity";
+import {CreatePaymentHandler} from "./cqrs/handlers/createPayment.handler";
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -32,7 +33,7 @@ import {PaymentEntity} from "./common/entities/payment.entity";
     }),
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, CreatePaymentHandler],
 })
 export class AppModule {
 }

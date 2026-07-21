@@ -1,5 +1,4 @@
 import {Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn} from "typeorm";
-import {Status} from "../enums/status.enum";
 
 @Entity()
 export class PaymentEntity {
@@ -18,8 +17,8 @@ export class PaymentEntity {
   @Column({name: "user_id"})
   userId: string;
 
-  @Column({name: "status", type: "simple-enum", enum: Status, default: Status.IN_PROCESS})
-  status: Status;
+  @Column({name: "status"})
+  status: string;
 
   @Column({name: "amount"})
   amount: number;
