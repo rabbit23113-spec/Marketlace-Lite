@@ -22,7 +22,7 @@ export class CreatePaymentHandler implements ICommandHandler<CreatePaymentComman
 
       const payment = await this.yookassa.payments.create({
         amount: {value: amount.toString(), currency: CurrencyEnum.RUB},
-        confirmation: {type: "redirect", return_url: "http://localhost:12090/api/payments/finish"},
+        confirmation: {type: "redirect", return_url: process.env.REDIRECT_URL!},
         capture: true,
         metadata: {orderId}
       })
@@ -37,6 +37,7 @@ export class CreatePaymentHandler implements ICommandHandler<CreatePaymentComman
         status: payment.status,
       })
       await this.repository.save(paymentEntity);
+      this.pino.info("PAYMENT CREATED", payment)
 
       return paymentEntity;
     } catch (err) {

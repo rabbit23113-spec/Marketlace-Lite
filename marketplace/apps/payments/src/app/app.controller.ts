@@ -13,4 +13,9 @@ export class AppController {
   async createPayment(@Payload() payload: { dto: CreatePaymentDto }): Promise<PaymentEntity> {
     return await this.appService.createPayment(payload.dto);
   }
+
+  @MessagePattern("payments.webhook")
+  async handleWebhook(@Payload() payload: { body: any }): Promise<void> {
+    await this.appService.handleWebhook(payload.body);
+  }
 }

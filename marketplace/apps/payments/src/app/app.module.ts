@@ -8,6 +8,7 @@ import {ConfigModule} from "@nestjs/config";
 import {YookassaModule} from '@companix/yookassa';
 import {PaymentEntity} from "./common/entities/payment.entity";
 import {CreatePaymentHandler} from "./cqrs/handlers/createPayment.handler";
+import {WebhookHandler} from "./cqrs/handlers/handleWebhook.handler";
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -33,7 +34,7 @@ import {CreatePaymentHandler} from "./cqrs/handlers/createPayment.handler";
     }),
   ],
   controllers: [AppController],
-  providers: [AppService, CreatePaymentHandler],
+  providers: [AppService, CreatePaymentHandler, WebhookHandler],
 })
 export class AppModule {
 }
