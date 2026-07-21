@@ -32,7 +32,6 @@ import {FindAllHandler} from "./cqrs/handlers/findAll.handler";
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (config: ConfigService) => ({
-        // Пример для Яндекс.Почты (требует пароль приложения)
         transport: {
           host: 'smtp.yandex.ru',
           port: 465,
