@@ -8,6 +8,7 @@ import {NotificationEntity} from "./common/entities/notification.entity";
 import * as path from "node:path";
 import {MailerModule} from "@nestjs-modules/mailer";
 import {ConfigModule, ConfigService} from "@nestjs/config";
+import {FindAllHandler} from "./cqrs/handlers/findAll.handler";
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -54,7 +55,7 @@ import {ConfigModule, ConfigService} from "@nestjs/config";
     }),
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, FindAllHandler],
 })
 export class AppModule {
 }

@@ -1,12 +1,13 @@
-import { Controller, Get } from '@nestjs/common';
-import { AppService } from './app.service';
+import {Controller} from '@nestjs/common';
+import {AppService} from './app.service';
+import {NotificationEntity} from "./common/entities/notification.entity";
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+  constructor(private readonly appService: AppService) {
+  }
 
-  @Get()
-  getData() {
-    return this.appService.getData();
+  async findAll(): Promise<NotificationEntity[]> {
+    return await this.appService.findAll();
   }
 }
