@@ -9,6 +9,7 @@ import * as path from "node:path";
 import {MailerModule} from "@nestjs-modules/mailer";
 import {ConfigModule, ConfigService} from "@nestjs/config";
 import {FindAllHandler} from "./cqrs/handlers/findAll.handler";
+import {CreateVerificationHandler} from "./cqrs/handlers/createVerification.handler";
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -42,7 +43,7 @@ import {FindAllHandler} from "./cqrs/handlers/findAll.handler";
           },
         },
         defaults: {
-          from: '"No-reply" <no-reply@yoursite.com>',
+          from: '"No-reply" <no-reply@marketplacelite.com>',
         },
         template: {
           dir: path.join(__dirname, '..', 'templates'),
@@ -54,7 +55,7 @@ import {FindAllHandler} from "./cqrs/handlers/findAll.handler";
     }),
   ],
   controllers: [AppController],
-  providers: [AppService, FindAllHandler],
+  providers: [AppService, FindAllHandler, CreateVerificationHandler],
 })
 export class AppModule {
 }
