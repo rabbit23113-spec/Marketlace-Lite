@@ -6,6 +6,7 @@ import {CqrsModule} from "@nestjs/cqrs";
 import {LoggerModule} from "nestjs-pino";
 import {ConfigModule} from "@nestjs/config";
 import {YookassaModule} from '@companix/yookassa';
+import {PaymentEntity} from "./common/entities/payment.entity";
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -15,9 +16,9 @@ import {YookassaModule} from '@companix/yookassa';
     database: 'payments',
     synchronize: true,
     autoLoadEntities: true,
-    entities: [],
+    entities: [PaymentEntity],
   }),
-    TypeOrmModule.forFeature([]),
+    TypeOrmModule.forFeature([PaymentEntity]),
     CqrsModule.forRoot(),
     LoggerModule.forRoot({
       pinoHttp: {
