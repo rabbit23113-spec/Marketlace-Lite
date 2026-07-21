@@ -5,6 +5,9 @@ import {LoggerModule} from "nestjs-pino";
 import {TypeOrmModule} from "@nestjs/typeorm";
 import {CqrsModule} from "@nestjs/cqrs";
 import {NotificationEntity} from "./common/entities/notification.entity";
+import * as path from "node:path";
+import {MailerModule} from "@nestjs-modules/mailer";
+import {ConfigModule, ConfigService} from "@nestjs/config";
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -22,6 +25,32 @@ import {NotificationEntity} from "./common/entities/notification.entity";
       pinoHttp: {
         level: process.env.NODE_ENV === "production" ? "info" : "debug",
       }
+    }),
+    ConfigModule.forRoot(),
+    MailerModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (config: ConfigService) => ({
+        // Пример для Яндекс.Почты (требует пароль приложения)
+        transport: {
+          host: 'smtp.yandex.ru',
+          port: 465,
+          secure: true,
+          auth: {
+            user: config.get('MAIL_USER'),
+            pass: config.get('MAIL_PASS'),
+          },
+        },
+        defaults: {
+          from: '"No-reply" <no-reply@yoursite.com>',
+        },
+        template: {
+          dir: path.join(__dirname, '..', 'templates'),
+          options: {
+            strict: true,
+          },
+        },
+      }),
     }),
   ],
   controllers: [AppController],
