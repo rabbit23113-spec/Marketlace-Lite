@@ -5,7 +5,8 @@ import {TypeOrmModule} from "@nestjs/typeorm";
 import {CqrsModule} from "@nestjs/cqrs";
 import {LoggerModule} from "nestjs-pino";
 import {PromotionEntity} from "./common/entities/promotion.entity";
-import {FindAllHandler} from "./cqrs/handlers/findAll.handlers";
+import {FindAllHandler} from "./cqrs/handlers/findAll.handler";
+import {CreatePromotionHandler} from "./cqrs/handlers/createPromotions.handler";
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -26,7 +27,7 @@ import {FindAllHandler} from "./cqrs/handlers/findAll.handlers";
     }),
   ],
   controllers: [AppController],
-  providers: [AppService, FindAllHandler],
+  providers: [AppService, FindAllHandler, CreatePromotionHandler],
 })
 export class AppModule {
 }
