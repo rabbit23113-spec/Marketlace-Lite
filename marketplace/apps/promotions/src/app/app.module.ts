@@ -8,6 +8,7 @@ import {PromotionEntity} from "./common/entities/promotion.entity";
 import {FindAllHandler} from "./cqrs/handlers/findAll.handler";
 import {CreatePromotionHandler} from "./cqrs/handlers/createPromotions.handler";
 import {UpdatePromotionHandler} from "./cqrs/handlers/updatePromotion.handler";
+import {DeletePromotionHandler} from "./cqrs/handlers/deletePromotion.handler";
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -28,7 +29,7 @@ import {UpdatePromotionHandler} from "./cqrs/handlers/updatePromotion.handler";
     }),
   ],
   controllers: [AppController],
-  providers: [AppService, FindAllHandler, CreatePromotionHandler, UpdatePromotionHandler],
+  providers: [AppService, FindAllHandler, CreatePromotionHandler, UpdatePromotionHandler, DeletePromotionHandler],
 })
 export class AppModule {
 }

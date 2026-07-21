@@ -6,6 +6,7 @@ import {CreatePromotionDto} from "./common/dto/createPromotion.dto";
 import {CreatePromotionCommand} from "./cqrs/commands/createPromotion.command";
 import {UpdatePromotionDto} from "./common/dto/updatePromotion.dto";
 import {UpdatePromotionCommand} from "./cqrs/commands/updatePromotion.command";
+import {DeletePromotionCommand} from "./cqrs/commands/deletePromotion.command";
 
 @Injectable()
 export class AppService {
@@ -22,5 +23,9 @@ export class AppService {
 
   async update(promotionId: string, dto: UpdatePromotionDto): Promise<PromotionEntity> {
     return await this.commandBus.execute(new UpdatePromotionCommand(promotionId, dto));
+  }
+
+  async deleteOne(promotionId: string): Promise<void> {
+    await this.commandBus.execute(new DeletePromotionCommand(promotionId));
   }
 }

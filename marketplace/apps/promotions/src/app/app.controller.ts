@@ -1,6 +1,6 @@
 import {Controller} from '@nestjs/common';
 import {AppService} from './app.service';
-import {MessagePattern, Payload} from "@nestjs/microservices";
+import {EventPattern, MessagePattern, Payload} from "@nestjs/microservices";
 import {PromotionEntity} from "./common/entities/promotion.entity";
 import {CreatePromotionDto} from "./common/dto/createPromotion.dto";
 import {UpdatePromotionDto} from "./common/dto/updatePromotion.dto";
@@ -24,6 +24,11 @@ export class AppController {
   async update(@Payload() payload: { promotionId: string, dto: UpdatePromotionDto }): Promise<PromotionEntity> {
     const {promotionId, dto} = payload;
     return await this.appService.update(promotionId, dto);
+  }
+
+  @EventPattern("promotions.delete")
+  async deleteOne(@Payload() payload: { promotionId: string }): Promise<void> {
+    await this.appService.deleteOne(payload.promotionId);
   }
 
 }
