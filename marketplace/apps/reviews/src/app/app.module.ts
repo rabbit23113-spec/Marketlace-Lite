@@ -10,6 +10,7 @@ import {FindAllHandler} from "./cqrs/handlers/findAll.handler";
 import {FindByProductIdHandler} from "./cqrs/handlers/findByProductId.handler";
 import {CreateReviewHandler} from "./cqrs/handlers/createReview.handler";
 import {UpdateReviewHandler} from "./cqrs/handlers/updateReview.handler";
+import {DeleteReviewHandler} from "./cqrs/handlers/deleteReview.handler";
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -40,7 +41,7 @@ import {UpdateReviewHandler} from "./cqrs/handlers/updateReview.handler";
     ])
   ],
   controllers: [AppController],
-  providers: [AppService, FindAllHandler, FindByProductIdHandler, CreateReviewHandler, UpdateReviewHandler],
+  providers: [AppService, FindAllHandler, FindByProductIdHandler, CreateReviewHandler, UpdateReviewHandler, DeleteReviewHandler],
 })
 export class AppModule {
 }

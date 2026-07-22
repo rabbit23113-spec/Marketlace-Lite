@@ -7,6 +7,7 @@ import {CreateReviewDto} from "./common/dto/createReview.dto";
 import {CreateReviewCommand} from "./cqrs/commands/createReview.command";
 import {UpdateReviewDto} from "./common/dto/updateReview.dto";
 import {UpdateReviewCommand} from "./cqrs/commands/updateReview.command";
+import {DeleteReviewCommand} from "./cqrs/commands/deleteReview.command";
 
 @Injectable()
 export class AppService {
@@ -27,5 +28,9 @@ export class AppService {
 
   async update(reviewId: string, dto: UpdateReviewDto): Promise<ReviewEntity> {
     return await this.commandBus.execute(new UpdateReviewCommand(reviewId, dto));
+  }
+
+  async delete(reviewId: string): Promise<void> {
+    await this.commandBus.execute(new DeleteReviewCommand(reviewId));
   }
 }
