@@ -74,6 +74,12 @@
     },
     {
       "path": "./apps/reviews"
+    },
+    {
+      "path": "./apps/warehouses-e2e"
+    },
+    {
+      "path": "./apps/warehouses"
     }
   ]
 }

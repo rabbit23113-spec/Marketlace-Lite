@@ -54,6 +54,11 @@ services:
       context: "."
       dockerfile: ./apps/reviews/Dockerfile
     ports: [ "12101:12101" ]
+  warehouses_service:
+    build:
+      context: "."
+      dockerfile: ./apps/warehouses/Dockerfile
+    ports: [ "12102:12102" ]
   users_database:
     image: postgres
     ports: [ "5432:5432" ]
@@ -131,3 +136,10 @@ services:
       POSTGRES_USER: "root"
       POSTGRES_PASSWORD: "root"
       POSTGRES_DB: "reviews"
+  warehouses_database:
+    image: postgres
+    ports: [ "5443:5432" ]
+    environment:
+      POSTGRES_USER: "root"
+      POSTGRES_PASSWORD: "root"
+      POSTGRES_DB: "warehouses"

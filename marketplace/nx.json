@@ -65,7 +65,8 @@
         "apps/notifications-e2e/**/*",
         "apps/payments-e2e/**/*",
         "apps/events-e2e/**/*",
-        "apps/reviews-e2e/**/*"
+        "apps/reviews-e2e/**/*",
+        "apps/warehouses-e2e/**/*"
       ]
     },
     {
