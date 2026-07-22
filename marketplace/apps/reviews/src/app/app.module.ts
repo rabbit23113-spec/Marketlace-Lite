@@ -9,6 +9,7 @@ import {ReviewEntity} from "./common/entities/review.entity";
 import {FindAllHandler} from "./cqrs/handlers/findAll.handler";
 import {FindByProductIdHandler} from "./cqrs/handlers/findByProductId.handler";
 import {CreateReviewHandler} from "./cqrs/handlers/createReview.handler";
+import {UpdateReviewHandler} from "./cqrs/handlers/updateReview.handler";
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -39,7 +40,7 @@ import {CreateReviewHandler} from "./cqrs/handlers/createReview.handler";
     ])
   ],
   controllers: [AppController],
-  providers: [AppService, FindAllHandler, FindByProductIdHandler, CreateReviewHandler],
+  providers: [AppService, FindAllHandler, FindByProductIdHandler, CreateReviewHandler, UpdateReviewHandler],
 })
 export class AppModule {
 }

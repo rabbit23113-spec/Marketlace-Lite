@@ -5,6 +5,8 @@ import {FindAllQuery} from "./cqrs/queries/findAll.query";
 import {FindByProductIdQuery} from "./cqrs/queries/findByProductId.query";
 import {CreateReviewDto} from "./common/dto/createReview.dto";
 import {CreateReviewCommand} from "./cqrs/commands/createReview.command";
+import {UpdateReviewDto} from "./common/dto/updateReview.dto";
+import {UpdateReviewCommand} from "./cqrs/commands/updateReview.command";
 
 @Injectable()
 export class AppService {
@@ -21,5 +23,9 @@ export class AppService {
 
   async create(dto: CreateReviewDto): Promise<ReviewEntity> {
     return await this.commandBus.execute(new CreateReviewCommand(dto));
+  }
+
+  async update(reviewId: string, dto: UpdateReviewDto): Promise<ReviewEntity> {
+    return await this.commandBus.execute(new UpdateReviewCommand(reviewId, dto));
   }
 }
