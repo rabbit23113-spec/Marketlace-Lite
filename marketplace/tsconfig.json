@@ -62,6 +62,12 @@
     },
     {
       "path": "./apps/payments"
+    },
+    {
+      "path": "./apps/events-e2e"
+    },
+    {
+      "path": "./apps/events"
     }
   ]
 }
