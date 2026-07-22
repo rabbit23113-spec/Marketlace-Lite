@@ -7,6 +7,7 @@ import {CqrsModule} from "@nestjs/cqrs";
 import {FindAllHandler} from "./cqrs/handlers/findAll.handler";
 import {CreateCategoryHandler} from "./cqrs/handlers/createCategory.handler";
 import {CategoryEntity} from "./common/entities/category.entity";
+import {ClientsModule, Transport} from "@nestjs/microservices";
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -25,6 +26,16 @@ import {CategoryEntity} from "./common/entities/category.entity";
         level: process.env.NODE_ENV === "production" ? "info" : "debug",
       }
     }),
+    ClientsModule.register([
+      {
+        name: "EVENTS_CLIENT",
+        transport: Transport.RMQ,
+        options: {
+          queue: "EVENTS_QUEUE",
+          urls: ["amqp://rabbitmq:5672"]
+        }
+      },
+    ])
   ],
   controllers: [AppController],
   providers: [AppService, FindAllHandler, CreateCategoryHandler],
