@@ -10,6 +10,7 @@ import {MailerModule} from "@nestjs-modules/mailer";
 import {ConfigModule, ConfigService} from "@nestjs/config";
 import {FindAllHandler} from "./cqrs/handlers/findAll.handler";
 import {CreateVerificationHandler} from "./cqrs/handlers/createVerification.handler";
+import {ClientsModule, Transport} from "@nestjs/microservices";
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -53,6 +54,16 @@ import {CreateVerificationHandler} from "./cqrs/handlers/createVerification.hand
         },
       }),
     }),
+    ClientsModule.register([
+      {
+        name: "EVENTS_CLIENT",
+        transport: Transport.RMQ,
+        options: {
+          queue: "EVENTS_QUEUE",
+          urls: ["amqp://rabbitmq:5672"]
+        }
+      },
+    ])
   ],
   controllers: [AppController],
   providers: [AppService, FindAllHandler, CreateVerificationHandler],

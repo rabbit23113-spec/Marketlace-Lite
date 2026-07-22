@@ -5,13 +5,16 @@ import {NotificationEntity} from "../../common/entities/notification.entity";
 import {Repository} from "typeorm";
 import {PinoLogger} from "nestjs-pino";
 import {MailerService} from "@nestjs-modules/mailer";
+import {Inject, InternalServerErrorException} from "@nestjs/common";
+import {ClientProxy} from "@nestjs/microservices";
 
 @CommandHandler(CreateVerificationCommand)
 export class CreateVerificationHandler implements ICommandHandler<CreateVerificationCommand> {
   constructor(
     @InjectRepository(NotificationEntity) private repository: Repository<NotificationEntity>,
     private pino: PinoLogger,
-    private mailer: MailerService
+    private mailer: MailerService,
+    @Inject("EVENTS_CLIENT") private eventsClient: ClientProxy,
   ) {
   }
 
@@ -38,9 +41,12 @@ export class CreateVerificationHandler implements ICommandHandler<CreateVerifica
         `,
       })
       await this.repository.save(notification);
+      this.eventsClient.emit("events.create", {domain: "NOTIFICATIONS", action: "CREATED", payload: notification});
     } catch (err) {
       // @ts-ignore
       this.pino.error(err.message)
+      // @ts-ignore
+      throw new InternalServerErrorException(err.message)
     }
   }
 }
