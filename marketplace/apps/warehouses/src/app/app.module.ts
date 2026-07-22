@@ -7,6 +7,7 @@ import {TypeOrmModule} from "@nestjs/typeorm";
 import {CqrsModule} from "@nestjs/cqrs";
 import {FindAllHandler} from "./cqrs/handlers/findAll.handler";
 import {FindOneByIdHandler} from "./cqrs/handlers/findOneById.handler";
+import {WarehouseEntity} from "./common/entities/warehouse.entity";
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -16,9 +17,9 @@ import {FindOneByIdHandler} from "./cqrs/handlers/findOneById.handler";
     database: 'warehouses',
     synchronize: true,
     autoLoadEntities: true,
-    entities: [],
+    entities: [WarehouseEntity],
   }),
-    TypeOrmModule.forFeature([]),
+    TypeOrmModule.forFeature([WarehouseEntity]),
     CqrsModule.forRoot(),
     LoggerModule.forRoot({
       pinoHttp: {
