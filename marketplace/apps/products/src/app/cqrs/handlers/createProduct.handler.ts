@@ -4,12 +4,15 @@ import {InjectRepository} from "@nestjs/typeorm";
 import {ProductEntity} from "../../common/entities/product.entity";
 import {Repository} from "typeorm";
 import {PinoLogger} from "nestjs-pino";
+import {Inject} from "@nestjs/common";
+import {ClientProxy} from "@nestjs/microservices";
 
 @CommandHandler(CreateProductCommand)
 export class CreateProductHandler implements ICommandHandler<CreateProductCommand> {
   constructor(
     @InjectRepository(ProductEntity) private repository: Repository<ProductEntity>,
     private pino: PinoLogger,
+    @Inject("EVENTS_CLIENT") private eventsClient: ClientProxy,
   ) {
   }
 
@@ -19,6 +22,7 @@ export class CreateProductHandler implements ICommandHandler<CreateProductComman
     const product: ProductEntity = this.repository.create(dto);
     await this.repository.save(product);
     this.pino.info("PRODUCT CREATED", product);
+    this.eventsClient.emit("events.create", {domain: "PRODUCTS", action: "CREATED", payload: product});
     return product;
   }
 }
