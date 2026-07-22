@@ -4,12 +4,15 @@ import {InjectRepository} from "@nestjs/typeorm";
 import {PromotionEntity} from "../../common/entities/promotion.entity";
 import {Repository} from "typeorm";
 import {PinoLogger} from "nestjs-pino";
+import {Inject} from "@nestjs/common";
+import {ClientProxy} from "@nestjs/microservices";
 
 @CommandHandler(CreatePromotionCommand)
 export class CreatePromotionHandler implements ICommandHandler<CreatePromotionCommand> {
   constructor(
     @InjectRepository(PromotionEntity) private repository: Repository<PromotionEntity>,
-    private pino: PinoLogger
+    private pino: PinoLogger,
+    @Inject("EVENTS_CLIENT") private eventsClient: ClientProxy,
   ) {
   }
 
@@ -17,6 +20,7 @@ export class CreatePromotionHandler implements ICommandHandler<CreatePromotionCo
     const promotion: PromotionEntity = this.repository.create(command.dto);
     await this.repository.save(promotion);
     this.pino.info("PROMOTION CREATED", promotion);
+    this.eventsClient.emit("events.create", {domain: "PROMOTIONS", action: "CREATED", payload: promotion});
     return promotion;
   }
 }

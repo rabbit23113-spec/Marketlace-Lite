@@ -9,6 +9,7 @@ import {FindAllHandler} from "./cqrs/handlers/findAll.handler";
 import {CreatePromotionHandler} from "./cqrs/handlers/createPromotions.handler";
 import {UpdatePromotionHandler} from "./cqrs/handlers/updatePromotion.handler";
 import {DeletePromotionHandler} from "./cqrs/handlers/deletePromotion.handler";
+import {ClientsModule, Transport} from "@nestjs/microservices";
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -27,6 +28,16 @@ import {DeletePromotionHandler} from "./cqrs/handlers/deletePromotion.handler";
         level: process.env.NODE_ENV === "production" ? "info" : "debug",
       }
     }),
+    ClientsModule.register([
+      {
+        name: "EVENTS_CLIENT",
+        transport: Transport.RMQ,
+        options: {
+          queue: "EVENTS_QUEUE",
+          urls: ["amqp://rabbitmq:5672"]
+        }
+      },
+    ])
   ],
   controllers: [AppController],
   providers: [AppService, FindAllHandler, CreatePromotionHandler, UpdatePromotionHandler, DeletePromotionHandler],

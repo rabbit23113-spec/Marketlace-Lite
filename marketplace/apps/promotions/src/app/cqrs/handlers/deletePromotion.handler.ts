@@ -4,13 +4,15 @@ import {InjectRepository} from "@nestjs/typeorm";
 import {PromotionEntity} from "../../common/entities/promotion.entity";
 import {Repository} from "typeorm";
 import {PinoLogger} from "nestjs-pino";
-import {NotFoundException} from "@nestjs/common";
+import {Inject, NotFoundException} from "@nestjs/common";
+import {ClientProxy} from "@nestjs/microservices";
 
 @CommandHandler(DeletePromotionCommand)
 export class DeletePromotionHandler implements ICommandHandler<DeletePromotionCommand> {
   constructor(
     @InjectRepository(PromotionEntity) private repository: Repository<PromotionEntity>,
-    private pino: PinoLogger
+    private pino: PinoLogger,
+    @Inject("EVENTS_CLIENT") private eventsClient: ClientProxy,
   ) {
   }
 
@@ -21,5 +23,6 @@ export class DeletePromotionHandler implements ICommandHandler<DeletePromotionCo
 
     await this.repository.delete(promotionId);
     this.pino.info(`PROMOTION WITH ID ${promotionId} DELETED`);
+    this.eventsClient.emit("events.create", {domain: "PROMOTIONS", action: "DELETED", payload: promotion});
   }
 }
