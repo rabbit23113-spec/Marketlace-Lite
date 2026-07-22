@@ -2,6 +2,7 @@ import {Injectable} from '@nestjs/common';
 import {CommandBus, QueryBus} from "@nestjs/cqrs";
 import {ReviewEntity} from "./common/entities/review.entity";
 import {FindAllQuery} from "./cqrs/queries/findAll.query";
+import {FindByProductIdQuery} from "./cqrs/queries/findByProductId.query";
 
 @Injectable()
 export class AppService {
@@ -10,5 +11,9 @@ export class AppService {
 
   async findAll(): Promise<ReviewEntity[]> {
     return await this.queryBus.execute(new FindAllQuery());
+  }
+
+  async findByProductId(productId: string): Promise<ReviewEntity[]> {
+    return await this.queryBus.execute(new FindByProductIdQuery(productId));
   }
 }

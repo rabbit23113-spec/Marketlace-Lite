@@ -1,6 +1,6 @@
 import {Controller} from '@nestjs/common';
 import {AppService} from './app.service';
-import {MessagePattern} from "@nestjs/microservices";
+import {MessagePattern, Payload} from "@nestjs/microservices";
 import {ReviewEntity} from "./common/entities/review.entity";
 
 @Controller()
@@ -11,6 +11,11 @@ export class AppController {
   @MessagePattern("reviews.findAll")
   async findAll(): Promise<ReviewEntity[]> {
     return await this.appService.findAll();
+  }
+
+  @MessagePattern("reviews.findByProductId")
+  async findByProductId(@Payload() payload: { productId: string }): Promise<ReviewEntity[]> {
+    return await this.appService.findByProductId(payload.productId);
   }
 
 }
