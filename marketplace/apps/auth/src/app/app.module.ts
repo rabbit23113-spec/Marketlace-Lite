@@ -26,6 +26,14 @@ import {SignUpHandler} from "./cqrs/handlers/signUp.handler";
     CqrsModule.forRoot(),
     ClientsModule.register([
       {
+        name: "EVENTS_CLIENT",
+        transport: Transport.RMQ,
+        options: {
+          queue: "EVENTS_QUEUE",
+          urls: ["amqp://rabbitmq:5672"]
+        }
+      },
+      {
         name: "USERS_CLIENT",
         transport: Transport.RMQ,
         options: {

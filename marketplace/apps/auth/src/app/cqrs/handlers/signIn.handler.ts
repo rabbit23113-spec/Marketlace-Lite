@@ -18,6 +18,7 @@ export class SignInHandler implements ICommandHandler<SignInCommand> {
   constructor(
     @InjectRepository(SessionEntity) private repository: Repository<SessionEntity>,
     @Inject("USERS_CLIENT") private usersClient: ClientProxy,
+    @Inject("EVENTS_CLIENT") private eventsClient: ClientProxy,
     private readonly jwtService: JwtService,
     private pino: PinoLogger,
   ) {
@@ -48,6 +49,7 @@ export class SignInHandler implements ICommandHandler<SignInCommand> {
     await this.repository.save(session);
 
     this.pino.info("USER SIGNED IN", user);
+    this.eventsClient.emit("events.create", {domain: "AUTH", action: "SIGNED IN", payload: session});
     return {accessToken, refreshToken, sessionId: session.sessionId};
   }
 
