@@ -6,6 +6,7 @@ import {CqrsModule} from "@nestjs/cqrs";
 import {TypeOrmModule} from "@nestjs/typeorm";
 import {EventEntity} from "./common/entities/event.entity";
 import {FindAllHandler} from "./cqrs/handlers/findAll.handler";
+import {CreateEventHandler} from "./cqrs/handlers/createEvent.handler";
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -26,7 +27,7 @@ import {FindAllHandler} from "./cqrs/handlers/findAll.handler";
     }),
   ],
   controllers: [AppController],
-  providers: [AppService, FindAllHandler],
+  providers: [AppService, FindAllHandler, CreateEventHandler],
 })
 export class AppModule {
 }
