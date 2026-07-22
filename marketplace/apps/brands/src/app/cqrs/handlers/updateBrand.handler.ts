@@ -3,14 +3,16 @@ import {CommandHandler, ICommandHandler} from "@nestjs/cqrs";
 import {InjectRepository} from "@nestjs/typeorm";
 import {BrandEntity} from "../../common/entities/brand.entity";
 import {Repository} from "typeorm";
-import {NotFoundException} from "@nestjs/common";
+import {Inject, NotFoundException} from "@nestjs/common";
 import {PinoLogger} from "nestjs-pino";
+import {ClientProxy} from "@nestjs/microservices";
 
 @CommandHandler(UpdateBrandCommand)
 export class UpdateBrandHandler implements ICommandHandler<UpdateBrandCommand> {
   constructor(
     @InjectRepository(BrandEntity) private repository: Repository<BrandEntity>,
-    private pino: PinoLogger
+    private pino: PinoLogger,
+    @Inject("EVENTS_CLIENT") private eventsClient: ClientProxy,
   ) {
   }
 
@@ -22,6 +24,7 @@ export class UpdateBrandHandler implements ICommandHandler<UpdateBrandCommand> {
 
     await this.repository.update(brandId, dto);
     this.pino.info("BRAND UPDATED", brand);
+    this.eventsClient.emit("events.create", {domain: "BRANDS", action: "UPDATED", payload: brand});
     return brand;
   }
 }

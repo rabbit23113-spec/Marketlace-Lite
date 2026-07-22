@@ -10,6 +10,7 @@ import {FindOneByIdHandler} from "./cqrs/handlers/findOneById.handler";
 import {FindOneByNameHandler} from "./cqrs/handlers/findOneByName.handler";
 import {CreateBrandHandler} from "./cqrs/handlers/createBrand.handler";
 import {UpdateBrandHandler} from "./cqrs/handlers/updateBrand.handler";
+import {ClientsModule, Transport} from "@nestjs/microservices";
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -28,6 +29,16 @@ import {UpdateBrandHandler} from "./cqrs/handlers/updateBrand.handler";
         level: process.env.NODE_ENV === "production" ? "info" : "debug",
       }
     }),
+    ClientsModule.register([
+      {
+        name: "EVENTS_CLIENT",
+        transport: Transport.RMQ,
+        options: {
+          queue: "EVENTS_QUEUE",
+          urls: ["amqp://rabbitmq:5672"]
+        }
+      },
+    ]),
   ],
   controllers: [AppController],
   providers: [AppService, FindAllHandler, FindOneByIdHandler, FindOneByNameHandler, CreateBrandHandler, UpdateBrandHandler],
