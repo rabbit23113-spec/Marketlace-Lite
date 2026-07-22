@@ -5,6 +5,7 @@ import {ClientsModule, Transport} from "@nestjs/microservices";
 import {TypeOrmModule} from "@nestjs/typeorm";
 import {CqrsModule} from "@nestjs/cqrs";
 import {LoggerModule} from "nestjs-pino";
+import {ReviewEntity} from "./common/entities/review.entity";
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -14,9 +15,9 @@ import {LoggerModule} from "nestjs-pino";
     database: 'reviews',
     synchronize: true,
     autoLoadEntities: true,
-    entities: [],
+    entities: [ReviewEntity],
   }),
-    TypeOrmModule.forFeature([]),
+    TypeOrmModule.forFeature([ReviewEntity]),
     CqrsModule.forRoot(),
     LoggerModule.forRoot({
       pinoHttp: {
