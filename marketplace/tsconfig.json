@@ -68,6 +68,12 @@
     },
     {
       "path": "./apps/events"
+    },
+    {
+      "path": "./apps/reviews-e2e"
+    },
+    {
+      "path": "./apps/reviews"
     }
   ]
 }

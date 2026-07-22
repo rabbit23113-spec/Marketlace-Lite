@@ -1,0 +1,26 @@
+{
+  "name": "@marketplace/reviews-e2e",
+  "version": "0.0.1",
+  "private": true,
+  "nx": {
+    "implicitDependencies": [
+      "@marketplace/reviews"
+    ],
+    "targets": {
+      "e2e": {
+        "executor": "@nx/jest:jest",
+        "outputs": [
+          "{projectRoot}/test-output/jest/coverage"
+        ],
+        "dependsOn": [
+          "@marketplace/reviews:build",
+          "@marketplace/reviews:serve"
+        ],
+        "options": {
+          "jestConfig": "apps/reviews-e2e/jest.config.cts",
+          "passWithNoTests": true
+        }
+      }
+    }
+  }
+}

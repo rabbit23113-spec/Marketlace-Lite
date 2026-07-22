@@ -49,6 +49,11 @@ services:
       context: "."
       dockerfile: ./apps/events/Dockerfile
     ports: [ "12100:12100" ]
+  reviews_service:
+    build:
+      context: "."
+      dockerfile: ./apps/reviews/Dockerfile
+    ports: [ "12101:12101" ]
   users_database:
     image: postgres
     ports: [ "5432:5432" ]
@@ -119,3 +124,10 @@ services:
       POSTGRES_USER: "root"
       POSTGRES_PASSWORD: "root"
       POSTGRES_DB: "events"
+  reviews_database:
+    image: postgres
+    ports: [ "5442:5432" ]
+    environment:
+      POSTGRES_USER: "root"
+      POSTGRES_PASSWORD: "root"
+      POSTGRES_DB: "reviews"

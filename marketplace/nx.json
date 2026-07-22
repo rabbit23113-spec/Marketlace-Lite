@@ -64,7 +64,8 @@
         "apps/promotions-e2e/**/*",
         "apps/notifications-e2e/**/*",
         "apps/payments-e2e/**/*",
-        "apps/events-e2e/**/*"
+        "apps/events-e2e/**/*",
+        "apps/reviews-e2e/**/*"
       ]
     },
     {
