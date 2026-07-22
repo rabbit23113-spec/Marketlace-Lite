@@ -28,21 +28,13 @@ import {DeleteCartHandler} from "./cqrs/handlers/deleteCart.handler";
     CqrsModule.forRoot(),
     ClientsModule.register([
       {
-        name: "USERS_CLIENT",
+        name: "EVENTS_CLIENT",
         transport: Transport.RMQ,
         options: {
-          queue: "USERS_QUEUE",
+          queue: "EVENTS_QUEUE",
           urls: ["amqp://rabbitmq:5672"]
         }
       },
-      {
-        name: "PRODUCTS_CLIENT",
-        transport: Transport.RMQ,
-        options: {
-          queue: "PRODUCTS_QUEUE",
-          urls: ["amqp://rabbitmq:5672"]
-        }
-      }
     ]),
     LoggerModule.forRoot({
       pinoHttp: {
