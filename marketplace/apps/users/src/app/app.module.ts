@@ -34,6 +34,14 @@ import {LoggerModule} from "nestjs-pino";
           urls: ["amqp://rabbitmq:5672"]
         }
       },
+      {
+        name: "EVENTS_CLIENT",
+        transport: Transport.RMQ,
+        options: {
+          queue: "EVENTS_QUEUE",
+          urls: ["amqp://rabbitmq:5672"]
+        }
+      },
     ]),
     LoggerModule.forRoot({
       pinoHttp: {

@@ -13,7 +13,8 @@ export class CreateUserHandler implements ICommandHandler<CreateUserCommand> {
   constructor(
     @InjectRepository(UserEntity) private repository: Repository<UserEntity>,
     @Inject("CARTS_CLIENT") private cartsClient: ClientProxy,
-    private pino: PinoLogger
+    private pino: PinoLogger,
+    @Inject("EVENTS_CLIENT") private eventsClient: ClientProxy,
   ) {
   }
 
@@ -23,6 +24,7 @@ export class CreateUserHandler implements ICommandHandler<CreateUserCommand> {
     await this.repository.save(user);
     this.pino.info("USER CREATED", {user});
     await firstValueFrom(this.cartsClient.send("carts.create", {userId: user.userId}));
+    this.eventsClient.emit("events.create", {domain: "USERS", action: "CREATED", payload: user});
     return user;
   }
 }

@@ -13,6 +13,7 @@ export class DeleteUserHandler implements ICommandHandler<DeleteUserCommand> {
     @InjectRepository(UserEntity) private repository: Repository<UserEntity>,
     @Inject("CARTS_CLIENT") private cartsClient: ClientProxy,
     private pino: PinoLogger,
+    @Inject("EVENTS_CLIENT") private eventsClient: ClientProxy,
   ) {
   }
 
@@ -23,5 +24,6 @@ export class DeleteUserHandler implements ICommandHandler<DeleteUserCommand> {
     await this.repository.delete(userId);
     this.cartsClient.emit("carts.delete", {userId});
     this.pino.info(`USER WITH ID ${userId} DELETED`)
+    this.eventsClient.emit("events.create", {domain: "USERS", action: "DELETED", payload: user})
   }
 }
