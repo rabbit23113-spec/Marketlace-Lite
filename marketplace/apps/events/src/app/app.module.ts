@@ -4,6 +4,7 @@ import {AppService} from './app.service';
 import {LoggerModule} from "nestjs-pino";
 import {CqrsModule} from "@nestjs/cqrs";
 import {TypeOrmModule} from "@nestjs/typeorm";
+import {EventEntity} from "./common/entities/event.entity";
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -13,9 +14,9 @@ import {TypeOrmModule} from "@nestjs/typeorm";
     database: 'events',
     synchronize: true,
     autoLoadEntities: true,
-    entities: [],
+    entities: [EventEntity],
   }),
-    TypeOrmModule.forFeature([]),
+    TypeOrmModule.forFeature([EventEntity]),
     CqrsModule.forRoot(),
     LoggerModule.forRoot({
       pinoHttp: {
