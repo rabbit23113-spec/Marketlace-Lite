@@ -5,6 +5,8 @@ import {FindAllQuery} from "./cqrs/queries/findAll.query";
 import {FindOneByIdQuery} from "./cqrs/queries/findOneById.query";
 import {CreateWarehouseDto} from "./common/dto/createWarehouse.dto";
 import {CreateWarehouseCommand} from "./cqrs/commands/createWarehouse.command";
+import {UpdateWarehouseDto} from "./common/dto/updateWarehouse.dto";
+import {UpdateWarehouseCommand} from "./cqrs/commands/updateWarehouse.command";
 
 @Injectable()
 export class AppService {
@@ -21,5 +23,9 @@ export class AppService {
 
   async create(dto: CreateWarehouseDto): Promise<WarehouseEntity> {
     return await this.commandBus.execute(new CreateWarehouseCommand(dto));
+  }
+
+  async update(warehouseId: string, dto: UpdateWarehouseDto): Promise<WarehouseEntity> {
+    return await this.commandBus.execute(new UpdateWarehouseCommand(warehouseId, dto));
   }
 }
