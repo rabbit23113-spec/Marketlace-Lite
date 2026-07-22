@@ -10,6 +10,7 @@ import {FindOneByIdHandler} from "./cqrs/handlers/findOneById.handler";
 import {WarehouseEntity} from "./common/entities/warehouse.entity";
 import {CreateWarehouseHandler} from "./cqrs/handlers/createWarehouse.handler";
 import {UpdateWarehouseHandler} from "./cqrs/handlers/updateWarehouse.handler";
+import {DeleteWarehouseHandler} from "./cqrs/handlers/deleteWarehouse.handler";
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -40,7 +41,7 @@ import {UpdateWarehouseHandler} from "./cqrs/handlers/updateWarehouse.handler";
     ])
   ],
   controllers: [AppController],
-  providers: [AppService, FindAllHandler, FindOneByIdHandler, CreateWarehouseHandler, UpdateWarehouseHandler],
+  providers: [AppService, FindAllHandler, FindOneByIdHandler, CreateWarehouseHandler, UpdateWarehouseHandler, DeleteWarehouseHandler],
 })
 export class AppModule {
 }

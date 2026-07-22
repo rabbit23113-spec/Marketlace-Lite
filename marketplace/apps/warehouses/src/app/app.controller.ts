@@ -1,6 +1,6 @@
 import {Controller} from '@nestjs/common';
 import {AppService} from './app.service';
-import {MessagePattern, Payload} from "@nestjs/microservices";
+import {EventPattern, MessagePattern, Payload} from "@nestjs/microservices";
 import {WarehouseEntity} from "./common/entities/warehouse.entity";
 import {CreateWarehouseDto} from "./common/dto/createWarehouse.dto";
 import {UpdateWarehouseDto} from "./common/dto/updateWarehouse.dto";
@@ -29,5 +29,10 @@ export class AppController {
   async update(@Payload() payload: { warehouseId: string, dto: UpdateWarehouseDto }): Promise<WarehouseEntity> {
     const {warehouseId, dto} = payload;
     return await this.appService.update(warehouseId, dto);
+  }
+
+  @EventPattern("warehouses.delete")
+  async delete(@Payload() payload: { warehouseId: string }): Promise<void> {
+    await this.appService.deleteOne(payload.warehouseId);
   }
 }
