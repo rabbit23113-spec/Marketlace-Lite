@@ -5,14 +5,16 @@ import {PaymentEntity} from "../../common/entities/payment.entity";
 import {Repository} from "typeorm";
 import {PinoLogger} from "nestjs-pino";
 import {CurrencyEnum, YookassaService} from "@companix/yookassa";
-import {InternalServerErrorException} from "@nestjs/common";
+import {Inject, InternalServerErrorException} from "@nestjs/common";
+import {ClientProxy} from "@nestjs/microservices";
 
 @CommandHandler(CreatePaymentCommand)
 export class CreatePaymentHandler implements ICommandHandler<CreatePaymentCommand> {
   constructor(
     @InjectRepository(PaymentEntity) private repository: Repository<PaymentEntity>,
     private pino: PinoLogger,
-    private yookassa: YookassaService
+    private yookassa: YookassaService,
+    @Inject("EVENTS_CLIENT") private eventsClient: ClientProxy,
   ) {
   }
 
@@ -38,6 +40,7 @@ export class CreatePaymentHandler implements ICommandHandler<CreatePaymentComman
       })
       await this.repository.save(paymentEntity);
       this.pino.info("PAYMENT CREATED", payment)
+      this.eventsClient.emit("events.create", {domain: "PAYMENTS", action: "CREATED", payload: paymentEntity});
 
       return paymentEntity;
     } catch (err) {

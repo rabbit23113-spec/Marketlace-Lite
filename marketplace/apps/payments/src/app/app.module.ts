@@ -9,6 +9,7 @@ import {YookassaModule} from '@companix/yookassa';
 import {PaymentEntity} from "./common/entities/payment.entity";
 import {CreatePaymentHandler} from "./cqrs/handlers/createPayment.handler";
 import {WebhookHandler} from "./cqrs/handlers/handleWebhook.handler";
+import {ClientsModule, Transport} from "@nestjs/microservices";
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -32,6 +33,16 @@ import {WebhookHandler} from "./cqrs/handlers/handleWebhook.handler";
       shopId: String(process.env.YOOKASSA_SHOP_ID),
       apiKey: String(process.env.YOOKASSA_API_KEY)
     }),
+    ClientsModule.register([
+      {
+        name: "EVENTS_CLIENT",
+        transport: Transport.RMQ,
+        options: {
+          queue: "EVENTS_QUEUE",
+          urls: ["amqp://rabbitmq:5672"]
+        }
+      },
+    ])
   ],
   controllers: [AppController],
   providers: [AppService, CreatePaymentHandler, WebhookHandler],
