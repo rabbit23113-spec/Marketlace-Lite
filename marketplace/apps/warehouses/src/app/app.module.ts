@@ -8,6 +8,7 @@ import {CqrsModule} from "@nestjs/cqrs";
 import {FindAllHandler} from "./cqrs/handlers/findAll.handler";
 import {FindOneByIdHandler} from "./cqrs/handlers/findOneById.handler";
 import {WarehouseEntity} from "./common/entities/warehouse.entity";
+import {CreateWarehouseHandler} from "./cqrs/handlers/createWarehouse.handler";
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -38,7 +39,7 @@ import {WarehouseEntity} from "./common/entities/warehouse.entity";
     ])
   ],
   controllers: [AppController],
-  providers: [AppService, FindAllHandler, FindOneByIdHandler],
+  providers: [AppService, FindAllHandler, FindOneByIdHandler, CreateWarehouseHandler],
 })
 export class AppModule {
 }

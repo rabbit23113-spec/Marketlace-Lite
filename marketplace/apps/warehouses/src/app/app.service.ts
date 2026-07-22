@@ -3,6 +3,8 @@ import {CommandBus, QueryBus} from "@nestjs/cqrs";
 import {WarehouseEntity} from "./common/entities/warehouse.entity";
 import {FindAllQuery} from "./cqrs/queries/findAll.query";
 import {FindOneByIdQuery} from "./cqrs/queries/findOneById.query";
+import {CreateWarehouseDto} from "./common/dto/createWarehouse.dto";
+import {CreateWarehouseCommand} from "./cqrs/commands/createWarehouse.command";
 
 @Injectable()
 export class AppService {
@@ -15,5 +17,9 @@ export class AppService {
 
   async findOneById(warehouseId: string): Promise<WarehouseEntity> {
     return await this.queryBus.execute(new FindOneByIdQuery(warehouseId));
+  }
+
+  async create(dto: CreateWarehouseDto): Promise<WarehouseEntity> {
+    return await this.commandBus.execute(new CreateWarehouseCommand(dto));
   }
 }
