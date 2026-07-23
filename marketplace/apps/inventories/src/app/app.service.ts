@@ -4,6 +4,8 @@ import {InventoryEntity} from "./common/entities/inventory.entity";
 import {FindByWarehouseIdQuery} from "./cqrs/queries/findByWarehouseId.query";
 import {CreateInventoryDto} from "./common/dto/createInventory.dto";
 import {CreateInventoryCommand} from "./cqrs/commands/createInventory.command";
+import {UpdateInventoryDto} from "./common/dto/updateInventory.dto";
+import {UpdateInventoryCommand} from "./cqrs/commands/updateInventory.command";
 
 @Injectable()
 export class AppService {
@@ -16,5 +18,9 @@ export class AppService {
 
   async create(dto: CreateInventoryDto): Promise<InventoryEntity> {
     return await this.commandBus.execute(new CreateInventoryCommand(dto));
+  }
+
+  async update(inventoryId: string, dto: UpdateInventoryDto): Promise<InventoryEntity> {
+    return await this.commandBus.execute(new UpdateInventoryCommand(inventoryId, dto));
   }
 }

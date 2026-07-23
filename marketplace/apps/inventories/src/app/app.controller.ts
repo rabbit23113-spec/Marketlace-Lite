@@ -3,6 +3,7 @@ import {AppService} from './app.service';
 import {MessagePattern, Payload} from "@nestjs/microservices";
 import {InventoryEntity} from "./common/entities/inventory.entity";
 import {CreateInventoryDto} from "./common/dto/createInventory.dto";
+import {UpdateInventoryDto} from "./common/dto/updateInventory.dto";
 
 @Controller()
 export class AppController {
@@ -17,5 +18,11 @@ export class AppController {
   @MessagePattern("inventories.create")
   async create(@Payload() payload: { dto: CreateInventoryDto }): Promise<InventoryEntity> {
     return await this.appService.create(payload.dto);
+  }
+
+  @MessagePattern("inventories.update")
+  async update(@Payload() payload: { inventoryId: string, dto: UpdateInventoryDto }): Promise<InventoryEntity> {
+    const {inventoryId, dto} = payload;
+    return await this.appService.update(inventoryId, dto);
   }
 }

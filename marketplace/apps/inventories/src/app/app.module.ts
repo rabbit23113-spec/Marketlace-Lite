@@ -7,6 +7,7 @@ import {CqrsModule} from "@nestjs/cqrs";
 import {LoggerModule} from "nestjs-pino";
 import {FindByWarehouseIdHandler} from "./cqrs/handlers/findByWarehouseId.handler";
 import {CreateInventoryHandler} from "./cqrs/handlers/createInventory.handler";
+import {UpdateInventoryHandler} from "./cqrs/handlers/updateInventory.handler";
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -37,7 +38,7 @@ import {CreateInventoryHandler} from "./cqrs/handlers/createInventory.handler";
     ])
   ],
   controllers: [AppController],
-  providers: [AppService, FindByWarehouseIdHandler, CreateInventoryHandler],
+  providers: [AppService, FindByWarehouseIdHandler, CreateInventoryHandler, UpdateInventoryHandler],
 })
 export class AppModule {
 }
