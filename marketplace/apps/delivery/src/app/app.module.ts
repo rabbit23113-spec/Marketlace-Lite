@@ -7,7 +7,6 @@ import {TypeOrmModule} from "@nestjs/typeorm";
 import {CqrsModule} from "@nestjs/cqrs";
 import {FindOneByOrderIdHandler} from "./cqrs/handlers/findOneByOrderId.handler";
 import {FindOneByIdHandler} from "./cqrs/handlers/findOneById.handler";
-import {CreateDeliveryDto} from "./common/dto/createDelivery.dto";
 import {CreateDeliveryHandler} from "./cqrs/handlers/createDelivery.handler";
 import {UpdateDeliveryHandler} from "./cqrs/handlers/updateDelivery.handler";
 
