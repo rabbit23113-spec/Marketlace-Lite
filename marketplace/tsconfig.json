@@ -86,6 +86,12 @@
     },
     {
       "path": "./apps/inventories"
+    },
+    {
+      "path": "./apps/delivery-e2e"
+    },
+    {
+      "path": "./apps/delivery"
     }
   ]
 }
