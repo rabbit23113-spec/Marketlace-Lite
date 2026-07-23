@@ -92,6 +92,12 @@
     },
     {
       "path": "./apps/delivery"
+    },
+    {
+      "path": "./apps/orders-e2e"
+    },
+    {
+      "path": "./apps/orders"
     }
   ]
 }

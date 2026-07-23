@@ -68,7 +68,8 @@
         "apps/reviews-e2e/**/*",
         "apps/warehouses-e2e/**/*",
         "apps/inventories-e2e/**/*",
-        "apps/delivery-e2e/**/*"
+        "apps/delivery-e2e/**/*",
+        "apps/orders-e2e/**/*"
       ]
     },
     {

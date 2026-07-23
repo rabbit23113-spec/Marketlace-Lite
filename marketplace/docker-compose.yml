@@ -68,7 +68,11 @@ services:
     build:
       context: "."
       dockerfile: ./apps/delivery/Dockerfile
-    ports: [ "12104:12104" ]
+  orders_service:
+    build:
+      context: "."
+      dockerfile: ./apps/orders/Dockerfile
+    ports: [ "12105:12105" ]
   users_database:
     image: postgres
     ports: [ "5432:5432" ]
@@ -167,3 +171,10 @@ services:
       POSTGRES_USER: "root"
       POSTGRES_PASSWORD: "root"
       POSTGRES_DB: "delivery"
+  orders_database:
+    image: postgres
+    ports: [ "5446:5432" ]
+    environment:
+      POSTGRES_USER: "root"
+      POSTGRES_PASSWORD: "root"
+      POSTGRES_DB: "orders"
