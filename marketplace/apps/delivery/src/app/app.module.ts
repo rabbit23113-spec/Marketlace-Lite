@@ -8,6 +8,8 @@ import {CqrsModule} from "@nestjs/cqrs";
 import {FindOneByOrderIdHandler} from "./cqrs/handlers/findOneByOrderId.handler";
 import {FindOneByIdHandler} from "./cqrs/handlers/findOneById.handler";
 import {CreateDeliveryDto} from "./common/dto/createDelivery.dto";
+import {CreateDeliveryHandler} from "./cqrs/handlers/createDelivery.handler";
+import {UpdateDeliveryHandler} from "./cqrs/handlers/updateDelivery.handler";
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -38,7 +40,7 @@ import {CreateDeliveryDto} from "./common/dto/createDelivery.dto";
     ])
   ],
   controllers: [AppController],
-  providers: [AppService, FindOneByOrderIdHandler, FindOneByIdHandler, CreateDeliveryDto],
+  providers: [AppService, FindOneByOrderIdHandler, FindOneByIdHandler, CreateDeliveryHandler, UpdateDeliveryHandler],
 })
 export class AppModule {
 }

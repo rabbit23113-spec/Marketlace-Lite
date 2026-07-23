@@ -5,6 +5,8 @@ import {FindOneByOrderIdQuery} from "./cqrs/queries/findOneByOrderId.query";
 import {FindOneByIdQuery} from "./cqrs/queries/findOneById.query";
 import {CreateDeliveryDto} from "./common/dto/createDelivery.dto";
 import {CreateDeliveryCommand} from "./cqrs/commands/createDelivery.command";
+import {UpdateDeliveryDto} from "./common/dto/updateDelivery.dto";
+import {UpdateDeliveryCommand} from "./cqrs/commands/updateDelivery.command";
 
 @Injectable()
 export class AppService {
@@ -21,5 +23,9 @@ export class AppService {
 
   async create(dto: CreateDeliveryDto): Promise<DeliveryEntity> {
     return await this.commandBus.execute(new CreateDeliveryCommand(dto));
+  }
+
+  async update(deliveryId: string, dto: UpdateDeliveryDto): Promise<DeliveryEntity> {
+    return await this.queryBus.execute(new UpdateDeliveryCommand(deliveryId, dto));
   }
 }
