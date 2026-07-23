@@ -1,12 +1,15 @@
-import { Controller, Get } from '@nestjs/common';
-import { AppService } from './app.service';
+import {Controller} from '@nestjs/common';
+import {AppService} from './app.service';
+import {MessagePattern, Payload} from "@nestjs/microservices";
+import {InventoryEntity} from "./common/entities/inventory.entity";
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+  constructor(private readonly appService: AppService) {
+  }
 
-  @Get()
-  getData() {
-    return this.appService.getData();
+  @MessagePattern("inventories.findByWarehouseId")
+  async findByWarehouseId(@Payload() payload: { warehouseId: string }): Promise<InventoryEntity[]> {
+    return await this.appService.findByWarehouseId(payload.warehouseId);
   }
 }
