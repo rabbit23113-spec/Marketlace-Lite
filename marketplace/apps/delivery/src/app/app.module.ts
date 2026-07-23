@@ -7,6 +7,7 @@ import {TypeOrmModule} from "@nestjs/typeorm";
 import {CqrsModule} from "@nestjs/cqrs";
 import {FindOneByOrderIdHandler} from "./cqrs/handlers/findOneByOrderId.handler";
 import {FindOneByIdHandler} from "./cqrs/handlers/findOneById.handler";
+import {CreateDeliveryDto} from "./common/dto/createDelivery.dto";
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -37,7 +38,7 @@ import {FindOneByIdHandler} from "./cqrs/handlers/findOneById.handler";
     ])
   ],
   controllers: [AppController],
-  providers: [AppService, FindOneByOrderIdHandler, FindOneByIdHandler],
+  providers: [AppService, FindOneByOrderIdHandler, FindOneByIdHandler, CreateDeliveryDto],
 })
 export class AppModule {
 }
