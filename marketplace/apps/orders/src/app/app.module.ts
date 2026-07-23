@@ -9,6 +9,7 @@ import {OrderEntity} from "./common/entities/order.entity";
 import {FindByUserIdHandler} from "./cqrs/handlers/findByUserId.handler";
 import {FindOneByIdHandler} from "./cqrs/handlers/findOneById.handler";
 import {CreateOrderHandler} from "./cqrs/handlers/createOrder.handler";
+import {UpdateStatusHandler} from "./cqrs/handlers/updateStatus.handler";
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -39,7 +40,7 @@ import {CreateOrderHandler} from "./cqrs/handlers/createOrder.handler";
     ])
   ],
   controllers: [AppController],
-  providers: [AppService, FindByUserIdHandler, FindOneByIdHandler, CreateOrderHandler],
+  providers: [AppService, FindByUserIdHandler, FindOneByIdHandler, CreateOrderHandler, UpdateStatusHandler],
 })
 export class AppModule {
 }

@@ -5,6 +5,7 @@ import {FindByUserIdQuery} from "./cqrs/queries/findByUserId.query";
 import {FindOneByIdQuery} from "./cqrs/queries/findOneById.query";
 import {CreateOrderDto} from "./common/dto/createOrder.dto";
 import {CreateOrderCommand} from "./cqrs/commands/createOrder.command";
+import {UpdateStatusCommand} from "./cqrs/commands/updateStatus.command";
 
 @Injectable()
 export class AppService {
@@ -21,5 +22,9 @@ export class AppService {
 
   async create(dto: CreateOrderDto): Promise<OrderEntity> {
     return await this.commandBus.execute(new CreateOrderCommand(dto));
+  }
+
+  async updateStatus(orderId: string, status: string): Promise<OrderEntity> {
+    return await this.commandBus.execute(new UpdateStatusCommand(orderId, status));
   }
 }

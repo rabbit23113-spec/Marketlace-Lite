@@ -23,4 +23,10 @@ export class AppController {
   async create(@Payload() payload: { dto: CreateOrderDto }): Promise<OrderEntity> {
     return await this.appService.create(payload.dto);
   }
+
+  @MessagePattern("orders.updateStatus")
+  async updateStatus(@Payload() payload: { orderId: string, status: string }): Promise<OrderEntity> {
+    const {orderId, status} = payload;
+    return await this.appService.updateStatus(orderId, status);
+  }
 }
