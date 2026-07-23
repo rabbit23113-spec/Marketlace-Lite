@@ -59,6 +59,11 @@ services:
       context: "."
       dockerfile: ./apps/warehouses/Dockerfile
     ports: [ "12102:12102" ]
+  inventories_service:
+    build:
+      context: "."
+      dockerfile: ./apps/inventories/Dockerfile
+    ports: [ "12103:12103" ]
   users_database:
     image: postgres
     ports: [ "5432:5432" ]
@@ -143,3 +148,10 @@ services:
       POSTGRES_USER: "root"
       POSTGRES_PASSWORD: "root"
       POSTGRES_DB: "warehouses"
+  inventories_database:
+    image: postgres
+    ports: [ "5444:5432" ]
+    environment:
+      POSTGRES_USER: "root"
+      POSTGRES_PASSWORD: "root"
+      POSTGRES_DB: "inventories"

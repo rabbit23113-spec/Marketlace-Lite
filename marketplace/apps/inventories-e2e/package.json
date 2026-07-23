@@ -1,0 +1,26 @@
+{
+  "name": "@marketplace/inventories-e2e",
+  "version": "0.0.1",
+  "private": true,
+  "nx": {
+    "implicitDependencies": [
+      "@marketplace/inventories"
+    ],
+    "targets": {
+      "e2e": {
+        "executor": "@nx/jest:jest",
+        "outputs": [
+          "{projectRoot}/test-output/jest/coverage"
+        ],
+        "dependsOn": [
+          "@marketplace/inventories:build",
+          "@marketplace/inventories:serve"
+        ],
+        "options": {
+          "jestConfig": "apps/inventories-e2e/jest.config.cts",
+          "passWithNoTests": true
+        }
+      }
+    }
+  }
+}
