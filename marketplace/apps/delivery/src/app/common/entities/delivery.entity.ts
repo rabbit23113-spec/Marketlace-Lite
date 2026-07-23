@@ -6,7 +6,7 @@ export class DeliveryEntity {
   @PrimaryGeneratedColumn("uuid", {name: "delivery_id"})
   deliveryId: string;
 
-  @Column({name: "order_id"})
+  @Column({name: "order_id", unique: true})
   orderId: string;
 
   @Column({name: "status", type: "enum", enum: DeliveryStatus})
