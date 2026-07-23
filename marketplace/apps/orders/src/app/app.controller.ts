@@ -8,6 +8,11 @@ export class AppController {
   constructor(private readonly appService: AppService) {
   }
 
+  @MessagePattern("orders.findOneById")
+  async findOneById(@Payload() payload: { orderId: string }): Promise<OrderEntity> {
+    return await this.appService.findOneById(payload.orderId);
+  }
+
   @MessagePattern("orders.findByUserId")
   async findByUserId(@Payload() payload: { userId: string }): Promise<OrderEntity[]> {
     return await this.appService.findByUserId(payload.userId);
